@@ -1,10 +1,16 @@
 // imports
 const express = require('express')
+const dotenv = require('dotenv')
+dotenv.config();
+const connection = require("./services/db.js")
+
 const authroutes = require("./routes/authRoute.js");
 
 
 const app = express();
+
 // Middlewares
+connection();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
