@@ -1,12 +1,14 @@
-const express = require("express")
-const contoller =require("../controllers/authcontroller.js")
+import express from "express"
+import * as controller from "../controllers/authcontroller.js"
+import validateRequest from "../middlewares/valiadateRequest.js";
+
 
 const router = express.Router();
 
-router.post("/login",contoller.login)
+router.post("/login",controller.loginValidationRules(),validateRequest,controller.login)
+router.post("/register",controller.registerValidationRules(),validateRequest,controller.register)
+router.post("/register/:id",controller.deleteuser)
+router.patch("/updatepassword",controller.updateValidationRules(),validateRequest,controller.updatepassword)
+router.post("/protect",controller.protect)
 
-router.post("/register",contoller.register)
-router.post("/register/:id",contoller.deleteuser)
-router.post("/protect",contoller.protect)
-
-module.exports = router;
+export default router

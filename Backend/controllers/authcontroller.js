@@ -1,65 +1,112 @@
-const express = require("express")
-const dotenv = require('dotenv')
+import express from "express"
+import dotenv from 'dotenv'
+import User from "../models/User.js"
+import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
+
+import { body } from "express-validator";
+import user from "../models/User.js"
+
 dotenv.config();
-const User = require("../models/User")
-const jwt = require("jsonwebtoken")
-const bcrypt = require("bcryptjs");
 
 const createtoken = (name)=>{
     let token = jwt.sign({name},process.env.SECRET_KEY,{expiresIn:"5m"});
     return token;
 }
 
-module.exports = {
+export const registerValidationRules = () =>
+    [
+        body("username")
+            .isLength({ min: 4 })
+            .withMessage("Username must be at least 4 characters")
+            .notEmpty()
+            .withMessage("Username is required"),
+        body("email")
+            .notEmpty()
+            .withMessage("Email is required"),
+        body("password")
+            .isLength({ min: 6 })
+            .withMessage("Password must be at least 6 characters")
+            .notEmpty()
+            .withMessage("Password is required"),
+    ]
 
-    login : async (req,res)=>{
-        const {userName,password} = req.body;
-        const user1 = await User.findOne({userName},{userName:1,password:1,userid:1});
-        const user2 = await User.findOne({email:userName},{email:1,password:1,userid:1});
-        const user = user1 ? user1 : user2;
+export const loginValidationRules = () =>
+    [
+        body("username")
+            .notEmpty()
+            .withMessage("Username is required"),
+        body("password")
+            .notEmpty()
+            .withMessage("Password is required")
+    ]
+
+export const updateValidationRules = () =>
+    [
+        body("username")
+            .isLength({ min: 4 })
+            .withMessage("Username must be at least 4 characters")
+            .notEmpty()
+            .withMessage("Username is required"),
+        body("newpassword")
+        .isLength({ min: 6 })
+            .withMessage("Password must be at least 6 characters")
+            .notEmpty()
+            .withMessage("password is required"),
+        body("confirmpassword")
+            .isLength({ min: 6 })
+            .withMessage("Password must be at least 6 characters")
+            .notEmpty()
+            .withMessage("Password is required"),
+    ]
+
+
+
+const login = async (req,res)=>{
+
+        const { username,password} = req.body;
+        const identifier = username;
+
+        const user = await User.findOne({
+            $or: [{ username :identifier}, { email: identifier }],
+        });
 
         if(!user)
             return res.status(400).json({msg:"User not found"})
 
         const isMatch = await bcrypt.compare(password,user.password);
         if(!isMatch)
-            return res.status(400).json({msg:"Username or password is Incorrect"})
+            return res.status(400).json({msg:"username or password is Incorrect"})
 
         const token = createtoken(user.user_id);
-
-        console.log(user);
-        return res.status(200).json({user,token});
-    },
+        return res.status(200).json({user,token,msg:"Login Successfull"});
+    }
     
-    register:async (req,res)=>{
-        const {userName,email,password} = req.body;
+const register = async (req,res)=>{
+        const {username,email,password} = req.body;
         const user1 = await User.findOne({email});
-        const user2 = await User.findOne({userName})
+        const user2 = await User.findOne({username})
 
-        const existinguser = user1? user1 : user2;
+        const existinguser = user1 ? user1 : user2;
         if(existinguser)
-            return res.send("User already exists");
+            return res.status(400).json({msg : "User already exists"});
 
         const hashedpassword = await bcrypt.hash(password,10);
-        const user = await User.create({userName,email,password:hashedpassword});
+        const user = await User.create({username,email,password:hashedpassword});
 
-        console.log(user);
-        res.status(200).json({userName,email,hashedpassword});
-    },
+        res.status(200).json({username,email,hashedpassword});
+    }
 
-    deleteuser: async (req,res) =>{
-        const userName = req.params.id;
-        // const user1 = await User.findOne({userName},{userName:1})
-        // const user2 = await User.findOne({email:userName},{username:1})
-        // const user = user1 ? user1 : user2;
+const deleteuser = async (req,res) =>{
+        const username = req.params.id;
 
-        const deleteduser = await User.deleteOne({userName})
+        const deleteduser = await User.deleteOne({username})
         if(deleteduser)
             res.status(200).json(deleteduser)
         return res.status(400).json({msg:"Invalid userdata"})
-    },
+    }
 
-    protect:(req, res) =>{
+const protect = (req, res) =>{
         let token;
         let decoded;
 
@@ -71,19 +118,48 @@ module.exports = {
             res.status(200).json(decoded);
         }catch(err){
             if (err.name === 'TokenExpiredError') {
-                console.log('Token expired');
                 res.status(404).json({msg:'Token expired',msg1:'Please login again'}
                 )
             } else if (err.name === 'JsonWebTokenError') {
-                console.log('Invalid token');
                 res.status(404).json({msg:'Invalid Token',msg1:'Please login again'})
             } else {
-                console.log('Something else went wrong');
                 res.status(404).json({msg:'Something else went Wrong',msg1:'Please login again'})
             }
         }
     }
+
+const updatepassword = async (req,res)=>{
+
+    const {username,newpassword,confirmpassword} = req.body;
+    const identifier = username;
+
+        
+        const user = await User.findOne({
+            $or: [{ username :identifier}, { email: identifier }],
+        },);
+
+        if(!user)
+            return res.status(400).json({msg:"User not found"})
+
+        if(newpassword !== confirmpassword)
+            return res.status(400).json({msg:"Passwords don't match"})
+
+        const hashpass = await bcrypt.hash(confirmpassword,10);
+
+        if(await bcrypt.compare(confirmpassword,user.password))
+            return res.status(400).json({msg:"password is same as old password"})
+
+        user.password = hashpass;
+        user.save();
+
+        // const result = await User.updateOne({email:identifier },{username:identifier},{
+        //     $set :{password:hashpass}
+        // })
+
+        return res.status(200).json({msg:"password updated successfully"});
 }
+
+export {login,register,protect,deleteuser,updatepassword}
 
 
 

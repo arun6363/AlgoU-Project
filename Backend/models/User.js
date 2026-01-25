@@ -1,10 +1,10 @@
-const mongoose = require("mongoose")
-const dotenv = require("dotenv")
+import mongoose from "mongoose"
+import dotenv from "dotenv"
 dotenv.config()
 
 
 const userSchema = new mongoose.Schema({
-    userName:{
+    username:{
         type:String,
         required:true,
         unique:true,
@@ -26,4 +26,4 @@ const userSchema = new mongoose.Schema({
 
 const user = mongoose.model("User",userSchema);
 
-module.exports = user;
+export default user;
