@@ -1,0 +1,169 @@
+
+
+
+/* Reset and box-sizing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.compage .main{
+  flex: 1;      
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color:#0f172a;
+  color: #e5e7eb;
+}
+
+
+
+.compage .compiler {
+  flex: 1;      
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background-color: #0f172a;
+  color: #e5e7eb;
+  overflow: hidden; 
+}
+
+/* LEFT SIDE (Editor) */
+.compage .TextArea {
+  /* flex: 2; */
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  background-color: #020617;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #1e293b;
+}
+
+/* Top control bar */
+.compage .controlTab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background-color: #020617;
+  border-bottom: 1px solid #1e293b;
+}
+
+/* filename on left */
+.compage .filename {
+  font-weight: 500;
+  color: #38bdf8;
+}
+
+/* RIGHT controls (select + run button) */
+.compage .controls-right {
+  margin-left: auto; /* push to right */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Language select dropdown */
+.compage .select {
+  background-color: #020617;
+  color: #e5e7eb;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.compage  .select:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
+
+/* Run button */
+.compage .controls-right .btn {
+  background-color: #22c55e;
+  color: #022c22;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.compage .controls-right .btn:hover {
+  background-color: #16a34a;
+}
+
+/* Code area container */
+.compage .code_Area {
+  flex: 1;
+  padding: 8px;
+  overflow: hidden; /* prevent outer scroll */
+  /* border: 2px      solid green; */
+}
+
+.compage .codeArea {
+  width: 100%;
+  /* height: 100%; */
+  resize: none;
+  /* border: none; */
+  outline: none;
+  background-color: #020617;
+  color: #e5e7eb;
+  font-size: 14px;
+  font-family: "Fira Code", monospace, system-ui;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-y: auto; /* scrolling only inside textarea */
+  /* border: 2px solid red; */
+}
+
+/* RIGHT SIDE (Input / Output panels) */
+.compage .inputArea {
+  /* flex: 1; */
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* Panel container */
+.compage .panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #020617;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+  overflow: hidden;
+}
+
+/* Panel header */
+.compage .panelHeader {
+  padding: 8px 12px;
+  border-bottom: 1px solid #1e293b;
+  color: #38bdf8;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Panel textareas */
+.compage .panelArea {
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 10px;
+  background-color: #020617;
+  color: #e5e7eb;
+  font-family: "Fira Code", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-y: auto; /* scrolling inside panel only */
+}

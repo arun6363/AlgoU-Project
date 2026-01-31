@@ -1,0 +1,63 @@
+.loginnav {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+}
+
+.loginnav .heading {
+    text-decoration: none;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.loginnav .middle{
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* border: 2px solid red; */
+}
+
+.loginnav .middle .mid{
+    /* margin-right: 10px; */
+    width: 120px;
+    /* font-size: 26px; */
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+}
+
+.loginnav .middle .mid.active{
+    color:var(--primary);
+}
+
+
+
+.loginnav .right{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80%;
+}
+
+.loginnav .username{
+    cursor: pointer;
+    margin-right: 10px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.loginnav .username:hover{
+    color: var(--primary);
+}
+

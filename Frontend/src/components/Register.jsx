@@ -31,7 +31,6 @@ export default function Register() {
             const response = await axios.post("http://localhost:3000/auth/register",
                 { username, email, password }
             )
-            console.log(response.data);
             dispatch(resetAuth());
             navigate("/")
         } catch (err) {
@@ -39,12 +38,8 @@ export default function Register() {
             if (err?.response?.data?.errors) {
                 const formattederrors = mapErrors(err.response.data.errors);
                 setErrors(formattederrors)
-                console.log(errors)
             }
             else if (err.response.data.msg) {
-
-                // console.log(errors)
-                console.log(err.response.data.msg)
                 setErrors({msg : err.response.data.msg})
             }
         }

@@ -8,7 +8,7 @@ export default function Landingpage() {
 
   return (
     <>  
-        <Nabvar/>
+        <Nabvar name = {"Online Judge"}/>
         <Body/>
     </>
   )

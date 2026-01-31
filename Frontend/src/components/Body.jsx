@@ -4,12 +4,16 @@ import "../styles/body.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+// import { useSelector,useDispatch } from "react-redux";
+
 export default function Body() {
 
     const navigate = useNavigate();
 
     return (
         <>
+            <div className="landing">
+
             <header>
                 <h1>Online Judge Platform</h1>
                 <p>
@@ -18,13 +22,17 @@ export default function Body() {
                 </p>
 
                 <div className="header-buttons">
-                    <button onClick={() => navigate("/login")} className="btn">
+                    {/* <button onClick={() => navigate("/login")} className="btn">
                         Start Coding
+                    </button> */}
+
+                    <button onClick={() =>navigate("/online-compiler")} className="btn">
+                        Online Compiler
                     </button>
 
-                    <button onClick={() => navigate("/register")} className="btn">
+                    {/* <button onClick={() => navigate("/register")} className="btn">
                         Explore Now
-                    </button>
+                    </button> */}
                 </div>
             </header>
 
@@ -113,6 +121,7 @@ export default function Body() {
             <footer>
                 © 2026 Online Judge Platform. All rights reserved.
             </footer>
+            </div>
         </>
     );
 }

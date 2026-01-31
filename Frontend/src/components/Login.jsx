@@ -4,14 +4,15 @@ import "../styles/modal.css"
 
 import { useSelector, useDispatch } from "react-redux";
 import { setUsername, setPassword, resetAuth } from "../store/authSlice"
+import { setLogin } from "../store/userSlice"
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { useState } from 'react';
+
 export default function Login() {
 
     const {password,username} = useSelector((state)=>state.auth);
-
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
      const [errors, setErrors] = useState({});
@@ -27,23 +28,25 @@ export default function Login() {
     const handlelogin = async ()=>{
 
         try{
-            console.log(username,password);
             const response = await axios.post("http://localhost:3000/auth/login",
                 {username,password}
             )
-            console.log(response.data);
+            console.log(response.data.token)
+            localStorage.setItem("jwt_token",response.data.token);
+            dispatch(setLogin(true));
             dispatch(resetAuth());
+
+            // {isLogedin ? navigate("/homepage") : navigate("/")}
             navigate("/")
         }catch(err){
 
             if (err?.response?.data?.errors) {
                 const formattederrors = mapErrors(err.response.data.errors);
-                // console.log(formattederrors)
                 setErrors(formattederrors)
-                // console.log(errors)
+
             }
             else if (err.response.data.msg) {
-                // console.log(err.response.data.msg)
+
                 setErrors({msg : err.response.data.msg})
             }
         }

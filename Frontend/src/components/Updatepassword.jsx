@@ -17,35 +17,31 @@ export default function Updatepassword() {
     const navigate = useNavigate();
 
     const [errors, setErrors] = useState({});
-        
-            const mapErrors = (errors) => {
-                const formaterr = {}
-                errors.forEach((err) => {
-                    formaterr[err.path] = err.msg
-                })
-                return formaterr;
+
+    const mapErrors = (errors) => {
+        const formaterr = {}
+        errors.forEach((err) => {
+            formaterr[err.path] = err.msg
+        })
+        return formaterr;
     }
 
     const handleupadte = async () => {
+        try {
 
-        try{
-            console.log(username, newpassword, confirmpassword)
             const response = await axios.patch("http://localhost:3000/auth/updatepassword",
                 { username, newpassword, confirmpassword }
             )
-            console.log(response.data);
+
             dispatch(resetAuth())
             navigate("/")
-        }catch(err){
-
+        } catch (err) {
             if (err?.response?.data?.errors) {
                 const formattederrors = mapErrors(err.response.data.errors);
                 setErrors(formattederrors)
-                // console.log(formattederrors)
             }
             else if (err.response.data.msg) {
-                // console.log(err.response.data.msg)
-                setErrors({msg : err.response.data.msg})
+                setErrors({ msg: err.response.data.msg })
             }
         }
     }
@@ -56,7 +52,7 @@ export default function Updatepassword() {
             <div className="modal">
                 <button
                     className="close-btn"
-                    onClick={() => {setErrors({}),navigate("/")}}
+                    onClick={() => { setErrors({}), navigate("/") }}
                 >
                     &times;
                 </button>
@@ -66,13 +62,13 @@ export default function Updatepassword() {
 
                 <div className="form-group">
                     <label>Username</label>
-                    <input type="text" placeholder="Choose a username" value={username} onChange={(e) => {dispatch(setUsername(e.target.value)),setErrors({})}} />
+                    <input type="text" placeholder="Choose a username" value={username} onChange={(e) => { dispatch(setUsername(e.target.value)), setErrors({}) }} />
                     {errors.username && <p className='error'> {errors.username}</p>}
                 </div>
 
                 <div className="form-group">
                     <label>New Password</label>
-                    <input type="password" placeholder="New Password" value={newpassword} onChange={(e) => {dispatch(setNewPassword(e.target.value)),setErrors({})}} />
+                    <input type="password" placeholder="New Password" value={newpassword} onChange={(e) => { dispatch(setNewPassword(e.target.value)), setErrors({}) }} />
                     {errors.newpassword && <p className='error'> {errors.newpassword}</p>}
                 </div>
 
@@ -82,7 +78,7 @@ export default function Updatepassword() {
                         type="password"
                         placeholder="Confirm password"
                         value={confirmpassword}
-                        onChange={(e) => {dispatch(setConfirmPassword(e.target.value)),setErrors({})}}
+                        onChange={(e) => { dispatch(setConfirmPassword(e.target.value)), setErrors({}) }}
                     />
                     {errors.confirmpassword && <p className='error'> {errors.confirmpassword}</p>}
                 </div>

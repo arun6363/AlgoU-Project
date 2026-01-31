@@ -5,14 +5,10 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 
 import { body } from "express-validator";
+import { generateToken } from "../utils/helpers.js"
 import user from "../models/User.js"
 
 dotenv.config();
-
-const createtoken = (name)=>{
-    let token = jwt.sign({name},process.env.SECRET_KEY,{expiresIn:"5m"});
-    return token;
-}
 
 export const registerValidationRules = () =>
     [
@@ -78,7 +74,13 @@ const login = async (req,res)=>{
         if(!isMatch)
             return res.status(400).json({msg:"username or password is Incorrect"})
 
-        const token = createtoken(user.user_id);
+        const token = generateToken(user._id)
+        res.cookie("jwt_token",token,{
+            httpOnly : true,
+            secure : false,
+            sameSite : "lax",
+            maxage : 7 *24 * 60 * 60 * 1000,
+        })
         return res.status(200).json({user,token,msg:"Login Successfull"});
     }
     

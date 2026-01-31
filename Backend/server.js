@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 import cors from "cors"
 import connection from "./services/db.js"
 import authroutes from "./routes/authRoute.js"
+import cookieParser from "cookie-parser"
+
 dotenv.config();
 const app = express();
 
@@ -12,6 +14,7 @@ connection();
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 
 // routes
 app.get("/",(req,res)=>{
