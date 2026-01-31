@@ -14,7 +14,7 @@ int main() {
 }
 `,
     outputcode:"output goes here......",
-    inputcode:"input goes here......"
+    inputcode:""
 }
 
 

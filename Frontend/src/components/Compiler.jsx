@@ -68,19 +68,16 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
 
     const handleRun = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/run", {
-                language, code
+            const response = await axios.post("http://localhost:3000/compiler/run", {
+                language, code, input:inputcode 
             })
 
-            console.log(response.data);
-            
-            dispatch(setOutputCode(response.data))
+            // console.log(response.data.output);
+            // console.log(response.data)
+            dispatch(setOutputCode(response.data.output))
         } catch (err) {
-            console.log(err.response.data.stderr)
-            // const error = err.response.data.stderr.split('.cpp')[1]
-            // console.log("Error in main.cpp \nmain.cpp:"+error);
-            // dispatch(setOutputCode("Error in Main.cpp \nMain.cpp" + error));
-            dispatch(setOutputCode(err.response.data.stderr));
+            // console.log(err.response.data.std.stderr)
+            dispatch(setOutputCode(err.response.data.std.stderr))
         }
     }
 

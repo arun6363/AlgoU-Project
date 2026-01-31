@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import cors from "cors"
 import connection from "./services/db.js"
 import authroutes from "./routes/authRoute.js"
+import compileroutes from "./routes/compilerRoute.js"
 import cookieParser from "cookie-parser"
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.get("/",(req,res)=>{
     res.send("Hello World from Server")
 })
 app.use("/auth",authroutes);
+app.use("/compiler",compileroutes)
 
 // server 
 const PORT = process.env.PORT || 3000;
