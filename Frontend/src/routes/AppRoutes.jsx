@@ -12,6 +12,7 @@ import Homepage from '../pages/Homepage'
 import Problemspage from '../pages/Problemspage'
 import Profilepage from '../pages/Profilepage'
 import Problempage from '../components/Problempage'
+import Createproblempage from '../pages/createproblempage'
 import { useSelector } from 'react-redux'
 
 
@@ -22,7 +23,7 @@ export default function AppRoutes() {
     <BrowserRouter>
         <Routes>
 
-            {console.log(isLogedin)}
+            {/* {console.log(isLogedin)} */}
             <Route path="/" element={isLogedin ? <Homepage/> : <Landingpage/>} />
             <Route path="/login" element ={<Login/>} />
             <Route path="/register" element ={<Register/>} />
@@ -32,6 +33,7 @@ export default function AppRoutes() {
             <Route path="/problems" element ={<Problemspage/>} />
             <Route path="/userprofile" element ={<Profilepage/>} />
             <Route path="/problems/problem" element ={<Problempage/>} />
+            <Route path="/createproblem" element ={<Createproblempage/>} />
         </Routes>
 
     </BrowserRouter>

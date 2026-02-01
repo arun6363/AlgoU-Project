@@ -72,11 +72,8 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
                 language, code, input:inputcode 
             })
 
-            // console.log(response.data.output);
-            // console.log(response.data)
             dispatch(setOutputCode(response.data.output))
         } catch (err) {
-            // console.log(err.response.data.std.stderr)
             dispatch(setOutputCode(err.response.data.std.stderr))
         }
     }

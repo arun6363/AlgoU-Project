@@ -1,0 +1,73 @@
+
+
+.profile .main{
+    width: 80%;
+    height: 100vh;
+    margin:10px auto;
+    border: 2px solid red;
+    display: flex;
+    gap: 8px;
+    padding: 15px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.profile .main .left{
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid var(--border); */
+    /* border-radius: 10px; */
+    /* border: 2px solid green; */
+}
+.profile .main .left .top{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+}
+
+.profile .main .left .top .child{
+    height: 40px;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 2px solid cyan; */
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.profile .main .left .top .child:hover{
+   color: var(--primary);;
+}
+
+
+.profile .main .right{
+    height: 100%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    /* border: 2px solid green; */
+}
+
+.profile .main .right button{
+    /* height: 100%; */
+    width: 40%;
+    /* display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px; */
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    /* border: 2px solid green; */
+}
