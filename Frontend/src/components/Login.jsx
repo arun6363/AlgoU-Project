@@ -31,7 +31,7 @@ export default function Login() {
             const response = await axios.post("http://localhost:3000/auth/login",
                 {username,password}
             )
-            console.log(response.data.token)
+            // console.log(response.data.token)
             localStorage.setItem("jwt_token",response.data.token);
             dispatch(setLogin(true));
             dispatch(resetAuth());

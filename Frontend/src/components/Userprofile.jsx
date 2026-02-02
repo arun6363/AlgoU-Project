@@ -15,6 +15,7 @@ export default function Userprofile() {
             <div className="top">
               <div className='child'>Solved Problems</div>
               <div className='child'>Submissions</div>
+              <div className='child' onClick={()=>navigate("/createproblem")}>Created Problems</div>
               <div className='child' onClick={()=>navigate("/createproblem")}>Create Problem</div>
             </div>
             <div className="body"></div>

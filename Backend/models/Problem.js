@@ -20,7 +20,7 @@ const problemSchema = new mongoose.Schema({
     difficulty:{
         type:String,
         required:true,
-        enum:["Easy","Medium","Hard"],
+        // enum:["Easy","Medium","Hard"],
     },
     input:{
         type:String,

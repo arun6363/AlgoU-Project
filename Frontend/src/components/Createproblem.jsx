@@ -21,7 +21,7 @@ export default function Createproblem() {
   }
 
   const dispatch = useDispatch()
-  const { id, title, statement, input, output, constraints, tags } = useSelector((state) => state.problem)
+  const { id, title, statement, input, output, constraints, tags ,difficulty} = useSelector((state) => state.problem)
 
   const handleId = (e) => {
     dispatch(setId(e.target.value));
@@ -59,7 +59,7 @@ export default function Createproblem() {
   const handlesave = async () => {
     try {
       const response = await axios.post("http://localhost:3000/problems/createproblem", {
-        id, title, statement, input, output, constraints, tags
+        id, title, statement, difficulty,input, output, constraints, tags
       })
 
       console.log(response.data);
@@ -70,7 +70,6 @@ export default function Createproblem() {
         const formattederrors = mapErrors(err.response.data.errors);
         setErrors(formattederrors)
         console.log(errors)
-
       }
       else if (err.response.data.msg) {
         console.log(err.response.data.msg )
@@ -103,7 +102,7 @@ export default function Createproblem() {
         </div>
         <div className="fields">
           <label htmlFor="">Problem Difficulty</label>
-          <textarea value={statement} onChange={handleDifficulty} />
+          <input type="text" placeholder='Ex: Easy' value={difficulty} onChange={handleDifficulty}/>
           {errors.difficulty && <p>{errors.difficulty}</p>}
         </div>
         <div className="fields">
@@ -123,7 +122,7 @@ export default function Createproblem() {
         </div>
         <div className="fields">
           <label htmlFor="">Tags</label>
-          <input type="text" placeholder='Ex:Array,DP' value={tags} onChange={handleTags} />
+          <input type="text" placeholder='Ex: Array,DP' value={tags} onChange={handleTags} />
           {errors.tags && <p>{errors.tags}</p>}
         </div>
       </div>

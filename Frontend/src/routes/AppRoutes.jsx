@@ -32,7 +32,7 @@ export default function AppRoutes() {
             <Route path="/compiler" element ={<Compiler/>} />
             <Route path="/problems" element ={<Problemspage/>} />
             <Route path="/userprofile" element ={<Profilepage/>} />
-            <Route path="/problems/problem" element ={<Problempage/>} />
+            <Route path="/problems/:id/:title" element ={<Problempage/>} />
             <Route path="/createproblem" element ={<Createproblempage/>} />
         </Routes>
 

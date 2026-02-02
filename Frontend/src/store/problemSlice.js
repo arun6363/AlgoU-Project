@@ -25,7 +25,7 @@ const problemSlice = new createSlice({
             state.statement = action.payload;
         },
         setDifficulty:(state,action)=>{
-            state.statement = action.payload;
+            state.difficulty = action.payload;
         },
         setInput:(state,action)=>{
             state.input = action.payload;

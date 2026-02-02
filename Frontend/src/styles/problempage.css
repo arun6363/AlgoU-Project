@@ -8,8 +8,10 @@
     width: 100vw;
     height: 100vh;
     gap: 8px;
-    /* padding: 20px; */
+    /* margin: 10px; */
+    padding: 10px;
     /* margin: 10px 0px; */
+    /* border-radius: 10px; */
     border: 1px solid var(--border);
 }
 
@@ -18,53 +20,186 @@
     flex-direction: column;
     width: 50%;
     border: 1px solid var(--border);
+    background-color: #020617;
     padding: 15px ;
-    /* margin: 10px 10px; */
+    border-radius: 10px;
     
 }
 
-
-.problempage .problemarea .ptitle{
-    height: 40px;
-    width: 100%;
-    font-size: 20px;
-    font-weight: 700px;
-    border-bottom: 1px solid var(--border);
-    /* border: 1px solid red; */
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.problempage .codearea{
+.problempage .right{
     display: flex;
     flex-direction: column;
     width: 50%;
+    height: 100%;
     gap: 8px;
-     /* padding: 10px ; */
-    /* margin: 10px 10px; */
-    border: 1px solid var(--border);
-    
 }
 
-.problempage .codearea .editor{
-    height: 70%;
-    border: 1px solid var(--border);
-    
+.problempage  .TextArea {
+  flex: 2;
+  height: 60%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #020617;
+  border-radius: 8px;
+  overflow: hidden;
+  /* border: 2px solid red; */
 }
 
-.problempage .codearea .outputarea{
-    height:30%;
-    border: 1px solid var(--border);
-    
+/* Top control bar */
+.problempage .controlTab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background-color: #020617;
+  border-bottom: 1px solid #1e293b;
+}
+
+/* filename on left */
+.problempage .filename {
+  font-weight: 500;
+  color: #38bdf8;
+}
+
+/* RIGHT controls (select + run button) */
+.problempage .controls-right {
+  margin-left: auto; /* push to right */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Language select dropdown */
+.problempage .select {
+  background-color: #020617;
+  color: #e5e7eb;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.problempage  .select:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
+
+/* Run button */
+.problempage .controls-right .btn {
+  background-color: #22c55e;
+  color: #022c22;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.problempage .controls-right .btn:hover {
+  background-color: #16a34a;
+}
+
+.problempage .code_Area {
+  flex: 1;
+  padding: 8px;
+   width: 100%;
+  height: 100%;
+  overflow: hidden; 
+}
+
+.problempage .codeArea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  outline: none;
+  background-color: #020617;
+  color: #e5e7eb;
+  font-size: 14px;
+  font-family: "Fira Code", monospace, system-ui;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-y: auto; 
+}
+
+.problempage .outputarea {
+  flex: 1; /* smaller area for output */
+  background-color: #020617;
+  border-radius: 8px;
+  color: #e5e7eb;
+  padding: 8px;
+  font-family: monospace;
+  overflow-y: auto;
+  
+  /* border: 2px solid green; */
+}
+
+
+.problempage .panel {
+  flex: 1;
+  display: flex;
+  height: 40%;
+  flex-direction: column;
+  background-color: #020617;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+  overflow: hidden;
+}
+
+/* Panel header */
+.problempage .panelHeader {
+  padding: 8px 12px;
+  border-bottom: 1px solid #1e293b;
+  color: #38bdf8;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Panel textareas */
+.problempage .panelArea {
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 10px;
+  background-color: #020617;
+  color: #e5e7eb;
+  font-family: "Fira Code", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-y: auto; /* scrolling inside panel only */
+}
+
+
+
+
+
+.problempage .body .problemheader{
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--primary);
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+
+.problempage .body .fields {
+    margin-bottom: 10px;
+}
+
+
+.problempage .body .fields .heading{
+    color: var(--secondary);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.problempage .body .fields label{
+    display: block;
 }
