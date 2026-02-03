@@ -12,6 +12,7 @@ import Navbar from './Navbar';
 export default function Compiler() {
 
     const dispatch = useDispatch();
+    const backend_url = import.meta.env.VITE_BACKEND_URL
 
 
     const {isLogedin} = useSelector((state)=>state.user);
@@ -68,7 +69,11 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
 
     const handleRun = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/compiler/run", {
+            // const response = await axios.post("http://localhost:3000/compiler/run", {
+            //     language, code, input:inputcode 
+            // })
+
+            const response = await axios.post(backend_url+"/compiler/run", {
                 language, code, input:inputcode 
             })
 

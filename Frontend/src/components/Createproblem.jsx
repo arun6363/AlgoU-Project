@@ -58,7 +58,9 @@ export default function Createproblem() {
 
   const handlesave = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/problems/createproblem", {
+
+      const backend_url = import.meta.env.VITE_BACKEND_URL
+      const response = await axios.post(backend_url+"/problems/createproblem", {
         id, title, statement, difficulty,input, output, constraints, tags
       })
 

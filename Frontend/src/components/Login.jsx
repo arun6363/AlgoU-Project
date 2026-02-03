@@ -28,15 +28,14 @@ export default function Login() {
     const handlelogin = async ()=>{
 
         try{
-            const response = await axios.post("http://localhost:3000/auth/login",
+            const backend_url = import.meta.env.VITE_BACKEND_URL
+            const response = await axios.post(backend_url+"/auth/login",
                 {username,password}
             )
             // console.log(response.data.token)
             localStorage.setItem("jwt_token",response.data.token);
             dispatch(setLogin(true));
             dispatch(resetAuth());
-
-            // {isLogedin ? navigate("/homepage") : navigate("/")}
             navigate("/")
         }catch(err){
 
@@ -46,7 +45,6 @@ export default function Login() {
 
             }
             else if (err.response.data.msg) {
-
                 setErrors({msg : err.response.data.msg})
             }
         }

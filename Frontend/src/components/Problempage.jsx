@@ -20,7 +20,8 @@ export default function Problempage() {
   useEffect(() => {
     console.log(problem)
     async function fetchdata() {
-      const response = await axios.post(`http://localhost:3000/problems/getproblembyid/${id}`);
+      const backend_url = import.meta.env.VITE_BACKEND_URL
+      const response = await axios.post(backend_url+`/problems/getproblembyid/${id}`);
       console.log(response.data);
       setProblem(response.data)
     }
@@ -86,7 +87,8 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
 
   const handleRun = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/compiler/run", {
+      const backend_url = import.meta.env.VITE_BACKEND_URL
+      const response = await axios.post(backend_url+"/compiler/run", {
         language, code, input: inputcode
       })
 

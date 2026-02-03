@@ -28,8 +28,8 @@ export default function Updatepassword() {
 
     const handleupadte = async () => {
         try {
-
-            const response = await axios.patch("http://localhost:3000/auth/updatepassword",
+            const backend_url = import.meta.env.VITE_BACKEND_URL
+            const response = await axios.patch(backend_url+"/auth/updatepassword",
                 { username, newpassword, confirmpassword }
             )
 

@@ -28,7 +28,8 @@ export default function Register() {
 
 
         try {
-            const response = await axios.post("http://localhost:3000/auth/register",
+            const backend_url = import.meta.env.VITE_BACKEND_URL
+            const response = await axios.post(backend_url+"/auth/register",
                 { username, email, password }
             )
             dispatch(resetAuth());
@@ -44,8 +45,7 @@ export default function Register() {
             }
         }
     }
-
-
+    
     return (
         <div className="modal-overlay" style={{ display: "flex" }}>
             <div className="modal">
