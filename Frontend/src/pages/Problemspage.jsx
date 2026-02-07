@@ -45,9 +45,14 @@ export default function Problemspage() {
             <div className="problemspage">
                 <div className='problems'>
 
-                    {problems.map(problem => (
+                    
+                    {problems.length > 0 ?
+                        (problems.map(problem => (
                         <ProblemTile key={problem.id} id = {problem.id} title={problem.title} difficulty={problem.difficulty || "Easy"} />
-                    ))}
+                    )))
+                    :
+                    <div className="no-problems">No problems found</div>
+                }
 
                     {/* <ProblemTile title={"Two Sum"} difficulty={"Easy"} />
                     <ProblemTile title={"Longest palindromic Subsequence"} difficulty={"Medium"} />

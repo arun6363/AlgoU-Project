@@ -1,6 +1,6 @@
 
 
-.profile .main{
+.profile  .main {
     width: 80%;
     height: 100vh;
     margin:10px auto;
@@ -13,13 +13,13 @@
     border-radius: 10px;
 }
 
-.profile .main .left{
+.profile  .main .left{
     height: 100%;
-    width: 70%;
+    width: 65%;
     display: flex;
     flex-direction: column;
 }
-.profile .main .left .top{
+.profile   .main .left .top{
     height: 40px;
     width: 100%;
     display: flex;
@@ -29,9 +29,8 @@
     border-bottom: 1px solid var(--border);
 }
 
-.profile .main .left .top .child{
+.profile .main  .left .top .child{
     height: 40px;
-    /* width: 25%; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,24 +38,182 @@
     cursor: pointer;
 }
 
-.profile .main .left .top .child:hover{
+.profile  .main .left .top .child:hover{
    color: var(--primary);;
 }
 
+.profile  .main .left .body{
+  width: 100%;
+}
 
-.profile .main .right{
+
+.profile  .main .right{
     height: 100%;
-    width: 40%;
+    width: 35%;
     display: flex;
     flex-direction: column;
     gap: 8px;
     padding: 10px;
     border: 1px solid var(--border);
     border-radius: 10px;
+    position: sticky;
+  top: 0;
+}
+.profile  .main .right .userdata{
+    display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
 
-.profile .main .right button{
-    width: 30%;
-    border: 1px solid var(--border);
-    border-radius: 4px;
+.profile .main .right .userdata label{
+   width: 45%;
+  font-weight: 600;
+  border-right: 1px solid var(--border);
+  color: white;
 }
+.profile  .main .right .userdata input{
+    all :unset;
+   width: 55%;
+  padding: 8px 12px;
+
+  border: none;
+  background: var(--bg-card);
+  border-radius: 6px;
+  color: white;
+
+  text-align: left;
+}
+.profile  .main .right .btns{
+    margin-top: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile  .main .right .btns button{
+   width: 70%;
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: 2px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: all 0.2s ease;
+}
+
+.profile  .main .right .btns button:hover{
+    background: var(--primary);
+  color: white;
+}
+
+
+
+
+
+/* 
+.profile {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.profile > *:first-child {
+  flex-shrink: 0;
+}
+
+
+.profile .main {
+  flex: 1;              
+  display: flex;
+  min-height: 0;           
+}
+
+
+.profile .main .left {
+  flex: 1;                 
+  display: flex;
+  flex-direction: column;
+  min-height: 0;           
+  overflow-y: auto;        
+  background: #f3f4f6;
+}
+
+
+.profile .main .left .top {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  flex-shrink: 0;
+}
+
+.profile .main .left .child {
+  padding: 8px 12px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  color: black;
+}
+
+
+.profile .main .left .body {
+  padding: 16px;
+}
+
+.profile .main .right {
+  width: 35%;           
+  padding: 16px;
+  background: #ffffff;
+  flex-shrink: 0;         
+}
+
+
+.profile .main .userdata {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.profile .main .userdata label {
+  width: 40%;
+  font-weight: 600;
+  color: black;
+}
+
+.profile .main .userdata input {
+  width: 60%;
+  border: none;
+  background: #f9fafb;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.profile .main .userdata input:focus {
+  outline: none;
+}
+
+
+.profile .main .btns {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile .main .btns button {
+  width: 80%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+} */

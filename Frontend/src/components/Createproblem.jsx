@@ -21,6 +21,7 @@ export default function Createproblem() {
   }
 
   const dispatch = useDispatch()
+  // const {username} = useSelector((state)=>state.user)
   const { id, title, statement, input, output, constraints, tags ,difficulty} = useSelector((state) => state.problem)
 
   const handleId = (e) => {
@@ -59,12 +60,14 @@ export default function Createproblem() {
   const handlesave = async () => {
     try {
 
+      const username = localStorage.getItem("username")
       const backend_url = import.meta.env.VITE_BACKEND_URL
       const response = await axios.post(backend_url+"/problems/createproblem", {
-        id, title, statement, difficulty,input, output, constraints, tags
+        id, title, statement, difficulty,input, output, constraints, tags,username
       })
 
       console.log(response.data);
+      // console.log("username"+username)
       dispatch(resetproblem())
       navigate("/userprofile")
     } catch (err) {

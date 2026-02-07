@@ -8,7 +8,6 @@ const executeCode = async (language, code, input) => {
 
     if (language === "cpp") {
         const output = await executeCPP(language, code, input);
-        console.log(output)
         return output;
     }
     else if (language === "java") {

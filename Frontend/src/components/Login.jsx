@@ -4,6 +4,7 @@ import "../styles/modal.css"
 
 import { useSelector, useDispatch } from "react-redux";
 import { setUsername, setPassword, resetAuth } from "../store/authSlice"
+import { set_Email,set_Username } from '../store/userSlice';
 import { setLogin } from "../store/userSlice"
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
@@ -32,8 +33,15 @@ export default function Login() {
             const response = await axios.post(backend_url+"/auth/login",
                 {username,password}
             )
-            // console.log(response.data.token)
+            // console.log(response.data)
+            const user = response.data.user
+            
+            console.log(user.username);
+
+            dispatch(set_Email(user.email))
+            dispatch(set_Username(user.username))
             localStorage.setItem("jwt_token",response.data.token);
+            localStorage.setItem("username",user.username);
             dispatch(setLogin(true));
             dispatch(resetAuth());
             navigate("/")

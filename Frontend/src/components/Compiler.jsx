@@ -8,11 +8,15 @@ import { setCode, setLanguage, setInputCode, setOutputCode, setFilename } from '
 // import { s} from '../store/codeAreaSlice';
 import Loginnav from './Loginnav';
 import Navbar from './Navbar';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 export default function Compiler() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const backend_url = import.meta.env.VITE_BACKEND_URL
+    const [aireview,setaireview] = useState(false)
 
 
     const {isLogedin} = useSelector((state)=>state.user);
@@ -83,6 +87,15 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
         }
     }
 
+    const handleAiReview = ()=>{
+        navigate("/ai-review",{
+            state:{
+                code :code,
+            },
+        })
+        // dispatch(setaireview(true));
+    }
+
     const handleEditorWillMount = (monaco) => {
         monaco.editor.defineTheme("myTheme", {
             base: "vs-dark",
@@ -123,6 +136,7 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
                                 <option value="py">Python</option>
                             </select>
                             <button className='btn' onClick={handleRun}> Run</button>
+                             <button className='btn' onClick={handleAiReview}> AI Review</button>
                         </div>
                     </div>
                     <div className="code_Area">

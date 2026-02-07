@@ -1,2 +1,4 @@
 codes
 node_modules
+Dockerfile
+.dockerignore

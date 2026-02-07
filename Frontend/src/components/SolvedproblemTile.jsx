@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/problemtile.css"
+import "../styles/solvedproblemtile.css"
 import {useNavigate} from "react-router-dom"
 import axios from "axios"
 import slugify from "slugify"
@@ -22,20 +22,17 @@ function slugify(title) {
 
     const title = slugify(props.title)
     navigate(`/problems/${props.id}/${title}`)
-    // console.log(response.data);
   }
 
   return (
-    <div className='problemtile'>
-        <div className="left">
-            <div className="title">{props.title}</div>
+    <div className='solvedproblemtile'>
+        <div className="title">
+            <div >{props.title}</div>
         </div>
-
-        <div className="right">
-             <div className={`difficulty ${props.difficulty?.toLowerCase()}`}>
-            {props.difficulty}</div>
+         {/* <div className="right"> */}
             <button className='btn' onClick={handleSolve}>Solve</button>
-        </div>
+        {/* </div> */}
+
     </div>
   )
 }

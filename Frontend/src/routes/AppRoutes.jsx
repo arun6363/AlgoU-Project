@@ -14,6 +14,7 @@ import Profilepage from '../pages/Profilepage'
 import Problempage from '../components/Problempage'
 import Createproblempage from '../pages/createproblempage'
 import { useSelector } from 'react-redux'
+import AIreviewpage from '../pages/AIreviewpage'
 
 
 export default function AppRoutes() {
@@ -34,6 +35,7 @@ export default function AppRoutes() {
             <Route path="/userprofile" element ={<Profilepage/>} />
             <Route path="/problems/:id/:title" element ={<Problempage/>} />
             <Route path="/createproblem" element ={<Createproblempage/>} />
+            <Route path="/ai-review" element ={<AIreviewpage/>} />
         </Routes>
 
     </BrowserRouter>

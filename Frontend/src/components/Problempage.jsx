@@ -32,9 +32,6 @@ export default function Problempage() {
 
   const dispatch = useDispatch();
 
-
-  const { isLogedin } = useSelector((state) => state.user);
-
   const { filename, code, language, inputcode, outputcode } = useSelector((state) => state.codeArea);
 
   const codeinputs =
@@ -127,7 +124,7 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
 
         <div className="body">
           <div className="problemheader">
-            <label htmlFor="" >{problem.title}</label>
+            <label htmlFor="" >{problem.title || "Dummy"}</label>
             <label htmlFor="">{problem.difficulty || "Easy"}</label>
           </div>
           <div className="fields">

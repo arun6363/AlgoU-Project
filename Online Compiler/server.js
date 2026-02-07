@@ -18,7 +18,6 @@ app.post("/run", async (req,res)=>{
 
     const {language,code,input} = req.body;
     try{
-        console.log(language,code,input)
         const output = await executeCode(language,code,input);
         return res.status(200).json(output) ;
 

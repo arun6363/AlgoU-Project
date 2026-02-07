@@ -8,6 +8,7 @@ export default function Loginnav() {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
+    const username = localStorage.getItem("username")
     
     const isActive = (path) => location.pathname === path;
 
@@ -21,7 +22,7 @@ export default function Loginnav() {
             onClick={()=>{navigate("/problems")}}>Problems</div>
         </div>
         <div className="right">
-            <div className="username" onClick={()=>{navigate('/userprofile')}}>arun_akhil</div>  
+            <div className="username" onClick={()=>{navigate('/userprofile')}}>{username}</div>  
             <div className="username"  onClick={()=>{ dispatch(logout()), navigate('/')}}>Logout</div>
         </div>
     </div>
