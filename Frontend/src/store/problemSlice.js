@@ -4,7 +4,8 @@ const initialState = {
     id:"",
     title:"",
     statement:"",
-    difficulty:"",
+    difficulty:"Easy",
+    timelimit:1,
     input:"",
     output:"",
     constraints:"",
@@ -24,6 +25,9 @@ const problemSlice = new createSlice({
         setStatement:(state,action)=>{
             state.statement = action.payload;
         },
+        setTimelimit:(state,action)=>{
+            state.timelimit = action.payload;
+        },
         setDifficulty:(state,action)=>{
             state.difficulty = action.payload;
         },
@@ -39,9 +43,9 @@ const problemSlice = new createSlice({
         setTags:(state,action)=>{
             state.tags = action.payload;
         },
-        resetproblem:()=>({...initialState}),
+        resetproblem:()=>initialState,
     }
 })
 
-export const {setConstraints,setId,setInput,setOutput,setTags,setTitle,setStatement,resetproblem,setDifficulty} = problemSlice.actions
+export const {setConstraints,setId,setInput,setOutput,setTags,setTitle,setStatement,resetproblem,setDifficulty,setTimelimit} = problemSlice.actions
 export default problemSlice.reducer;

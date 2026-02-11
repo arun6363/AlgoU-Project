@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import Editor from "@monaco-editor/react";
+import AuthAlert from './AuthAlert';
 
 
 import "../styles/problempage.css"
@@ -9,11 +10,14 @@ import axios from 'axios';
 
 import { useDispatch, useSelector } from "react-redux"
 import { setCode, setLanguage, setInputCode, setOutputCode, setFilename } from '../store/codeAreaSlice';
+import Loginnav from './Loginnav';
+import Nabvar from './Navbar';
 
 export default function Problempage() {
 
   const { id, title } = useParams();
   const [problem, setProblem] = useState({});
+  const { isLogedin } = useSelector((state) => state.user)
 
   // console.log(id,title);
 
@@ -21,13 +25,22 @@ export default function Problempage() {
     console.log(problem)
     async function fetchdata() {
       const backend_url = import.meta.env.VITE_BACKEND_URL
-      const response = await axios.post(backend_url+`/problems/getproblembyid/${id}`);
+      const response = await axios.post(backend_url + `/problems/getproblembyid/${id}`);
       console.log(response.data);
       setProblem(response.data)
     }
     fetchdata();
 
   }, [id]);
+
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    if (showAlert) {
+      const timer = setTimeout(() => setShowAlert(false), 3000);
+      return () => clearTimeout(timer); // cleanup
+    }
+  }, [showAlert]);
 
 
   const dispatch = useDispatch();
@@ -85,13 +98,31 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
   const handleRun = async () => {
     try {
       const backend_url = import.meta.env.VITE_BACKEND_URL
-      const response = await axios.post(backend_url+"/compiler/run", {
+      const response = await axios.post(backend_url + "/compiler/run", {
         language, code, input: inputcode
       })
 
       dispatch(setOutputCode(response.data.output))
     } catch (err) {
       dispatch(setOutputCode(err.response.data.std.stderr))
+    }
+  }
+
+  const handleAiReview = () => {
+
+    if (isLogedin) {
+      navigate("/ai-review", { state: { code } });
+    } else {
+      // setShowAlert(false);
+      setShowAlert(true); // show the alert at top of page
+    }
+  }
+  const handlesubmit = ()=>{
+    if (isLogedin) {
+      // navigate("/ai-review", { state: { code } });
+    } else {
+      // setShowAlert(false);
+      setShowAlert(true); // show the alert at top of page
     }
   }
 
@@ -119,6 +150,11 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
 
 
   return (
+
+    <>
+    {isLogedin ? <Loginnav/> : <Nabvar/>}
+    
+
     <div className='problempage'>
       <div className="problemarea">
 
@@ -128,7 +164,7 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
             <label htmlFor="">{problem.difficulty || "Easy"}</label>
           </div>
           <div className="fields">
-            <label htmlFor="" className='heading'>Problem Statement</label>
+            {/* <label htmlFor="" className='heading'>Problem Statement</label> */}
             <label htmlFor="">{problem.statement}</label>
           </div>
           <div className="fields">
@@ -161,6 +197,9 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
                 <option value="py">Python</option>
               </select>
               <button className='btn' onClick={handleRun}> Run</button>
+              <button className='btn' onClick={handlesubmit}> Submit</button>
+              <button className='btn' onClick={handleAiReview}> AI Review</button>
+              {showAlert && <AuthAlert />}
             </div>
           </div>
           <div className="code_Area">
@@ -197,5 +236,6 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
       </div>
 
     </div>
+    </>
   )
 }

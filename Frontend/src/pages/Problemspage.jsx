@@ -5,12 +5,16 @@ import Loginnav from '../components/Loginnav'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import axios from "axios"
+import { useSelector } from 'react-redux'
+import Nabvar from '../components/Navbar'
 
 export default function Problemspage() {
 
     const [problems, setProblems] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const problemsPerPage = 10;
+
+    const {isLogedin} = useSelector((state) => state.user);
 
     useEffect(() => {
         async function fetchdata() {
@@ -41,10 +45,13 @@ export default function Problemspage() {
 
     return (
         <>
-            <Loginnav />
+
+            { isLogedin ? 
+            <Loginnav /> : <Nabvar/>}
             <div className="problemspage">
                 <div className='problems'>
 
+                     <div className='heading_problem'>Problems</div>
                     
                     {problems.length > 0 ?
                         (problems.map(problem => (
@@ -53,23 +60,14 @@ export default function Problemspage() {
                     :
                     <div className="no-problems">No problems found</div>
                 }
-
-                    {/* <ProblemTile title={"Two Sum"} difficulty={"Easy"} />
-                    <ProblemTile title={"Longest palindromic Subsequence"} difficulty={"Medium"} />
-                    <ProblemTile title={"Next Greater Element"} difficulty={"Hard"} />
-                    <ProblemTile title={"Search in rotated sorted array"} difficulty={"Hard"} />
-                    <ProblemTile title={"Max Consecutive Ones's"} difficulty={"Hard"} />*/}
                 </div>
-
-
 
                 <div className="filters">
 
                     <div className='filter-card'>
 
-                        <div className="heading">
-                            {/* <input type="text" placeholder='Search Problem here'  /> */}
-                        </div>
+                         <div className='heading'>Search</div>
+                         <input type="text" placeholder='search problem' />
                     </div>
                     <div className="filter-card">
                         <div className='heading'>Type</div>

@@ -5,7 +5,7 @@ const token = localStorage.getItem("jwt_token");
 const initialState={
     email:'',
     username:'',
-    isLogedin:!!token,
+    isLogedin:!!token ? true : false,
 }
 
 const userSlice = createSlice({
@@ -23,7 +23,7 @@ const userSlice = createSlice({
         },
         logout:(state)=>{
             state.isLogedin = false;
-            localStorage.removeItem("jwt_token");
+            localStorage.clear();
         }
     }
 })

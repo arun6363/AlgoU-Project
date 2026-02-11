@@ -1,6 +1,6 @@
 .userprofile_2 .main{
     display: flex;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     width: 100%;
     height: calc(100vh - 60px);
 }
@@ -10,6 +10,7 @@
     width: 70%;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid var(--border);
 }
 
 .userprofile_2 .main .left .header{
@@ -46,16 +47,76 @@
 .userprofile_2 .main .right{
     width: 30%;
     height: 100%;
-    overflow-y: auto;
-    position: sticky;
-    top: 0;
-    /* border: 2px solid green; */
+    padding: 5px;
+    /* border: 1px solid cyan; */
 }
 
-.userprofile_2 .main .right div{
+.userprofile_2 .main .right .userdata{
     width: 100%;
-    height: 60px;
-    border: 2px solid green;
+    /* padding: 10px 0px; */
+    border: 2px solid var(--border);
+    background: var(--bg-card);
+    border-radius: 10px;
+}
+
+.userprofile_2 .main .right .user_heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid var(--border);
+    font-size: 18px;
+    font-weight: 800px;
+    
+}
+
+.userprofile_2 .main .right .fields{
+    display: flex;
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    margin-top:10px ;
+}
+
+.userprofile_2 .main .right .field_heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35%;
+    height: 100%;
+    border-right:1px solid var(--border);
+}
+
+.userprofile_2 .main .right .field_value{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding:10px
+}
+
+.userprofile_2 .main .right .buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border-top: 2px solid var(--border);
+}
+
+.userprofile_2 .main .right .buttons .btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600px;
+    width: 80%;
+    height: 40px;
+    border: 1px solid var(--border);
+    margin-top: 8px;
+    border-radius: 10px;
+    background:var(--bg-card);
+    cursor: pointer;
 }
 
 

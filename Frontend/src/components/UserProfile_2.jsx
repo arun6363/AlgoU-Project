@@ -1,28 +1,84 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "../styles/UserProfile_2.css"
 import Loginnav from './Loginnav'
 import SolvedproblemTile from './SolvedproblemTile.jsx'
 import CreatedproblemTile from './CreatedproblemTile.jsx'
 
 import { useNavigate } from 'react-router'
+import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
 import axios from 'axios'
+import { logout } from '../store/userSlice.js'
+import { useSearchParams } from "react-router-dom";
 
 export default function UserProfile_2() {
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const [createdproblems,setCreatedproblems] = useState([])
+    const [createdproblems, setCreatedproblems] = useState([])
+    const [solvedproblems, setSolvedproblems] = useState([])
+    const [model, setModal] = useState(null);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const tabFromUrl = searchParams.get("tab");
+    // setModal(tabFromUrl);
 
-    async function fetchCreatedProblems(){
+    useEffect(() => {
+        setModal(tabFromUrl);
+        if(tabFromUrl === "solvedProblems"){
+            fetchSolvedProblems();
+        }else if(tabFromUrl === "createdProblems"){
+            fetchCreatedProblems();
+        }
+        else{
+            fetchSubmissions();
+        }
+    }, [tabFromUrl]);
+
+    
+    async function fetchCreatedProblems() {
         const username = localStorage.getItem("username")
         console.log(username)
-        const response = await axios.get(`http://localhost:3000/problems/getcreatedproblems?username=${username}`,{
-            username:username
+        setSearchParams({ tab: "createdProblems" });
+        setModal("createdProblems")
+        console.log(username, "Created Problems")
+        const response = await axios.get(`http://localhost:3000/problems/getcreatedproblems?username=${username}`, {
+            username: username
         });
+        console.log(response.data)
         setCreatedproblems(response.data)
-        console.log(createdproblems)
+        // console.log(createdproblems) 
     }
-    // fetchCreatedProblems;
+
+    async function fetchSolvedProblems() {
+        const username = localStorage.getItem("username")
+        setSearchParams({ tab: "solvedProblems" });
+        setModal("solvedProblems")
+        console.log(username, "Solved Problems")
+        const response = await axios.get(`http://localhost:3000/problems/getcreatedproblems?username=${username}`, {
+            username: username
+        });
+        console.log(response.data)
+        setSolvedproblems(response.data)
+    }
+
+    async function fetchSubmissions() {
+        // const username = localStorage.getItem("username")
+        setSearchParams({ tab: "Submissions" });
+        setModal("Submissions")
+        // console.log(username,"Solved Problems")
+        // const response = await axios.get(`http://localhost:3000/problems/getcreatedproblems?username=${username}`, {
+        //     username: username
+        // });
+        // console.log(response.data)
+        // setSolvedproblems(response.data)
+    }
+
+    const handlelogout = () => {
+        localStorage.clear()
+        dispatch(logout())
+        navigate('/')
+    }
 
     return (
         <div className='userprofile_2'>
@@ -30,43 +86,77 @@ export default function UserProfile_2() {
             <div className='main'>
                 <div className="left">
                     <div className="header">
-                        <button>Submissions</button>
-                        <button>Solved Problems</button>
-                        <button onClick={()=>fetchCreatedProblems()}>Created Problems</button>
-                        <button onClick={()=>navigate("/createproblem")}>Create problem</button>
+                        <button onClick={() => fetchSubmissions()}>Submissions</button>
+                        <button onClick={() => fetchSolvedProblems()}>Solved Problems</button>
+                        <button onClick={() => fetchCreatedProblems()}>Created Problems</button>
+                        <button onClick={() => navigate("/createproblem")}>Create problem</button>
                     </div>
                     <div className="body">
-                            <SolvedproblemTile title={"Dummy"} difficulty={"Easy"}/> 
-                            <SolvedproblemTile title={"Dumm-2"} difficulty={"Hard"}/> 
-                            <CreatedproblemTile title={"created problem"}/>
-                            <SolvedproblemTile title={"Dummy"} difficulty={"Easy"}/> 
-                            <SolvedproblemTile title={"Dumm-2"} difficulty={"Hard"}/> 
-                            <CreatedproblemTile title={"created problem"}/>
-                            <SolvedproblemTile title={"Dummy"} difficulty={"Easy"}/> 
-                            <SolvedproblemTile title={"Dumm-2"} difficulty={"Hard"}/> 
-                            <CreatedproblemTile title={"created problem"}/>
-                            <SolvedproblemTile title={"Dummy"} difficulty={"Easy"}/> 
-                            <SolvedproblemTile title={"Dumm-2"} difficulty={"Hard"}/> 
-                            <CreatedproblemTile title={"created problem"}/>
 
+                        {model === "Submissions" ? (<div>No Submissions yet</div>) :
+                            (null)
+                        }
+
+
+                        {model === "createdProblems" ?
+                            (
+                                createdproblems.length > 0 ? (
+                                    createdproblems.map((problem, index) => (
+                                        <CreatedproblemTile key={index} id={problem.id} title={problem.title}
+                                            onDeleteSuccess={fetchCreatedProblems}
+                                        />
+                                    ))
+                                ) : (<div> No Created Poblems</div>)
+                            ) : (null)
+                        }
+                        {model === "solvedProblems" ?
+                            (
+                                solvedproblems.length > 0 ? (
+                                    solvedproblems.map((problem, index) => (
+                                        <SolvedproblemTile key={index} id={problem.id} title={problem.title} />
+                                    ))
+                                ) : (<div> No Solved Poblems</div>)
+                            )
+                            : (null)
+                        }
+                        {/* <SolvedproblemTile title={"Dummy"} difficulty={"Easy"} />
+                        <SolvedproblemTile title={"Dummy"} difficulty={"Easy"} />
+                        <SolvedproblemTile title={"Dumm-2"} difficulty={"Hard"} />
+                        <CreatedproblemTile title={"created problem"} /> */}
                     </div>
                 </div>
                 <div className="right">
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                    <div>5</div>
-                    <div>6</div>
-                    <div>7</div>
-                    <div>8</div>
-                    <div>9</div>
-                    <div>10</div>
-                    <div>11</div>
-                    <div>12</div>
-                    <div>13</div>
-                    <div>14</div>
-                    <div>15</div>
+                    <div className="userdata">
+                        <div className="user_heading">User Profile</div>
+                        <div className="fields">
+                            <div className="field_heading">Username</div>
+                            <div className="field_value">{localStorage.getItem("username")}</div>
+                        </div>
+                        <div className="fields">
+                            <div className="field_heading">Email</div>
+                            <div className="field_value">{localStorage.getItem("email")}</div>
+                        </div>
+                        <div className="fields">
+                            <div className="field_heading">Total Problems</div>
+                            <div className="field_value"></div>
+                        </div>
+                        <div className="fields">
+                            <div className="field_heading">Solved Problems</div>
+                            <div className="field_value"></div>
+                        </div>
+                        <div className="fields">
+                            <div className="field_heading">Created Problems</div>
+                            <div className="field_value"></div>
+                        </div>
+                        <div className="buttons">
+                            <button className="btn" >Update Password</button>
+                            <button className="btn" onClick={handlelogout} >Logout</button>
+                            <button className="btn" >Delete Account</button>
+                            {/* <div className="btn">Update password</div>
+                            <div className="btn" onClick={handlelogout}>Logout</div>
+                            <div className="btn">Delete Account</div> */}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

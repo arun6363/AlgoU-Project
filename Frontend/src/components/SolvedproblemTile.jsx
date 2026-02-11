@@ -25,6 +25,8 @@ function slugify(title) {
   }
 
   return (
+
+    // <ProblemTile title={props.title} difficulty={props.difficulty}/>
     <div className='solvedproblemtile'>
         <div className="title">
             <div >{props.title}</div>

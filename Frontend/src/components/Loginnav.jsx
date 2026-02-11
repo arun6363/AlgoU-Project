@@ -12,6 +12,12 @@ export default function Loginnav() {
     
     const isActive = (path) => location.pathname === path;
 
+    const handlelogout = ()=>{
+      localStorage.clear()
+      dispatch(logout())
+      navigate('/')
+    }
+
   return (
     <div className='loginnav'>
         <div className='heading' onClick={()=>{navigate("/")}}> Online Judge</div>
@@ -22,8 +28,7 @@ export default function Loginnav() {
             onClick={()=>{navigate("/problems")}}>Problems</div>
         </div>
         <div className="right">
-            <div className="username" onClick={()=>{navigate('/userprofile')}}>{username}</div>  
-            <div className="username"  onClick={()=>{ dispatch(logout()), navigate('/')}}>Logout</div>
+            <div className="username" onClick={()=>{navigate('/userprofile')}}>{username}</div>
         </div>
     </div>
   )

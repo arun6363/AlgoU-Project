@@ -16,11 +16,19 @@ export default function CreatedproblemTile(props) {
 
   const navigate = useNavigate();
 
-  const handleSolve = async ()=>{
+  const handledelete = async ()=>{
+    // console.log(props.id);
+    const id = props.id;
+    const response = await axios.post("http://localhost:3000/problems/deleteproblem",{
+      id
+    })
 
+    props.onDeleteSuccess();
+  }
 
-    const title = slugify(props.title)
-    navigate(`/problems/${props.id}/${title}`)
+  const handleedit = async ()=>{
+    // console.log(props.id,"navigating");
+    navigate(`/editproblem/${props.id}`);
   }
 
   return (
@@ -29,8 +37,8 @@ export default function CreatedproblemTile(props) {
             <div >{props.title}</div>
         </div>
          <div className="buttons">
-            <button className='btn'> Edit </button>
-            <button className='btn' onClick={handleSolve}>Delete</button>
+            <button className='btn' onClick={handleedit}> Edit </button>
+            <button className='btn' onClick={handledelete}> Delete</button>
         </div>
 
     </div>

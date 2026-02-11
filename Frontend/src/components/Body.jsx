@@ -29,6 +29,9 @@ export default function Body() {
                     <button onClick={() =>navigate("/online-compiler")} className="btn">
                         Online Compiler
                     </button>
+                    <button onClick={() =>navigate("/problems")} className="btn">
+                        Explore Problems
+                    </button>
 
                     {/* <button onClick={() => navigate("/register")} className="btn">
                         Explore Now

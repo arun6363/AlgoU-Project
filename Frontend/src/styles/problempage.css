@@ -6,12 +6,9 @@
 .problempage{
     display: flex;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 60px);
     gap: 8px;
-    /* margin: 10px; */
     padding: 10px;
-    /* margin: 10px 0px; */
-    /* border-radius: 10px; */
     border: 1px solid var(--border);
 }
 
@@ -22,8 +19,7 @@
     border: 1px solid var(--border);
     background-color: #020617;
     padding: 15px ;
-    border-radius: 10px;
-    
+    border-radius: 10px; 
 }
 
 .problempage .right{

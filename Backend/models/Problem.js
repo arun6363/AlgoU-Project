@@ -5,7 +5,7 @@ dotenv.config()
 
 const problemSchema = new mongoose.Schema({
     id:{
-        type:String,
+        type:Number,
         required:true,
         unique:true,
     },
@@ -21,6 +21,10 @@ const problemSchema = new mongoose.Schema({
         type:String,
         required:true,
         // enum:["Easy","Medium","Hard"],
+    },
+    timelimit:{
+        type:Number,
+        required:true,
     },
     input:{
         type:String,

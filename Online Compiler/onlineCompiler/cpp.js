@@ -58,7 +58,8 @@ const executeCPP = (language,code,input="") => {
 
     return new Promise((resolve, reject) => {
         exec(
-            `g++ "${filePath}" -o "${outPath}" && cd "${outputPath}" && .//"${jobId}.out" < "${input_file}"`,
+            // `g++ "${filePath}" -o "${outPath}" && cd "${outputPath}" && .//"${jobId}.out" < "${input_file}"`,
+            `g++ "${filePath}" -o "${outPath}" && "${outPath}" < "${input_file}"`,
             (error, stdout, stderr) => {
                 if (error) {
                     reject({ error, stderr });

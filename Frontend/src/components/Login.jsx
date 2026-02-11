@@ -42,6 +42,7 @@ export default function Login() {
             dispatch(set_Username(user.username))
             localStorage.setItem("jwt_token",response.data.token);
             localStorage.setItem("username",user.username);
+            localStorage.setItem("email",user.email);
             dispatch(setLogin(true));
             dispatch(resetAuth());
             navigate("/")

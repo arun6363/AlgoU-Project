@@ -1,16 +1,30 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import axios from "axios"
 
 import "../styles/createproblem.css"
 import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate} from "react-router-dom"
-import { setId, setTags, setTitle, setInput, setOutput, setConstraints, setStatement, setDifficulty,resetproblem} from '../store/problemSlice'
+import { useNavigate } from "react-router-dom"
+import { setId, setTags, setTitle, setTimelimit, setInput, setOutput, setConstraints, setStatement, setDifficulty, resetproblem } from '../store/problemSlice'
 
 export default function Createproblem() {
 
   const [errors, setErrors] = useState({});
+  const fileInputRef = useRef(null);
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetproblem());
+    };
+  }, [dispatch])
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+  };
+
 
   const mapErrors = (errors) => {
     const formaterr = {}
@@ -20,9 +34,7 @@ export default function Createproblem() {
     return formaterr;
   }
 
-  const dispatch = useDispatch()
-  // const {username} = useSelector((state)=>state.user)
-  const { id, title, statement, input, output, constraints, tags ,difficulty} = useSelector((state) => state.problem)
+  const { id, title, statement, timelimit, input, output, constraints, tags, difficulty } = useSelector((state) => state.problem)
 
   const handleId = (e) => {
     dispatch(setId(e.target.value));
@@ -38,6 +50,10 @@ export default function Createproblem() {
   }
   const handleDifficulty = (e) => {
     dispatch(setDifficulty(e.target.value));
+    setErrors({})
+  }
+  const handleTimelimit = (e) => {
+    dispatch(setTimelimit(e.target.value));
     setErrors({})
   }
   const handleInput = (e) => {
@@ -62,12 +78,11 @@ export default function Createproblem() {
 
       const username = localStorage.getItem("username")
       const backend_url = import.meta.env.VITE_BACKEND_URL
-      const response = await axios.post(backend_url+"/problems/createproblem", {
-        id, title, statement, difficulty,input, output, constraints, tags,username
+      const response = await axios.post(backend_url + "/problems/createproblem", {
+        id, title, statement, difficulty, timelimit, input, output, constraints, tags, username
       })
 
       console.log(response.data);
-      // console.log("username"+username)
       dispatch(resetproblem())
       navigate("/userprofile")
     } catch (err) {
@@ -77,7 +92,7 @@ export default function Createproblem() {
         console.log(errors)
       }
       else if (err.response.data.msg) {
-        console.log(err.response.data.msg )
+        console.log(err.response.data.msg)
         setErrors({ id: err.response.data.msg })
       }
     }
@@ -92,7 +107,7 @@ export default function Createproblem() {
       <div className="body">
         <div className="fields">
           <label htmlFor="">Problem Id</label>
-          <input type="text" placeholder='Ex: P001' value={id} onChange={handleId} />
+          <input type="text" placeholder='Ex: 1' value={id} onChange={handleId} />
           {errors.id && <p>{errors.id}</p>}
         </div>
         <div className="fields">
@@ -107,8 +122,17 @@ export default function Createproblem() {
         </div>
         <div className="fields">
           <label htmlFor="">Problem Difficulty</label>
-          <input type="text" placeholder='Ex: Easy' value={difficulty} onChange={handleDifficulty}/>
+          <select name="" id="" value={difficulty} onChange={handleDifficulty}>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
           {errors.difficulty && <p>{errors.difficulty}</p>}
+        </div>
+        <div className="fields">
+          <label htmlFor="">Time Limit(max:4secs)</label>
+          <input type="text" placeholder='Enter Time limit for problem' value={timelimit} onChange={handleTimelimit} />
+          {errors.timelimit && <p>{errors.timelimit}</p>}
         </div>
         <div className="fields">
           <label htmlFor="">Input</label>
@@ -129,6 +153,20 @@ export default function Createproblem() {
           <label htmlFor="">Tags</label>
           <input type="text" placeholder='Ex: Array,DP' value={tags} onChange={handleTags} />
           {errors.tags && <p>{errors.tags}</p>}
+        </div>
+        <div className="testcases">
+          <div className="fields">
+            <label htmlFor="">Input Testcase</label>
+            <button onClick={() => fileInputRef.current.click()}>Choose File</button>
+            <input type="file" placeholder='Ex: Array,DP' ref = {fileInputRef} onChange={handleFileChange} style={{display:"none"}} />
+            {errors.tags && <p>{errors.tags}</p>}
+          </div>
+          <div className="fields">
+            <label htmlFor="">Output Testcase</label>
+            <button onClick={() => fileInputRef.current.click()}>Choose File</button>
+            <input type="file" placeholder='Ex: Array,DP' ref = {fileInputRef} onChange={handleFileChange} style={{display:"none"}} />
+            {errors.tags && <p>{errors.tags}</p>}
+          </div>
         </div>
       </div>
     </div>
