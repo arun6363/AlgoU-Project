@@ -5,26 +5,25 @@ import "../styles/createproblem.css"
 import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setId, setTags, setTitle, setTimelimit, setInput, setOutput, setConstraints, setStatement, setDifficulty, resetproblem } from '../store/problemSlice'
+import {
+  setId, setTags, setTitle, setTimelimit, setInput, setOutput, setConstraints, setStatement, setDifficulty,
+  resetproblem, setInputtestcase, setOutputtestcase
+} from '../store/problemSlice'
 
 export default function Createproblem() {
 
   const [errors, setErrors] = useState({});
   const fileInputRef = useRef(null);
+  const fileOutputRef = useRef(null);
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
 
   useEffect(() => {
     return () => {
       dispatch(resetproblem());
     };
   }, [dispatch])
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    console.log(file);
-  };
-
 
   const mapErrors = (errors) => {
     const formaterr = {}
@@ -34,7 +33,7 @@ export default function Createproblem() {
     return formaterr;
   }
 
-  const { id, title, statement, timelimit, input, output, constraints, tags, difficulty } = useSelector((state) => state.problem)
+  const { id, title, statement, timelimit, input, output, constraints, tags, difficulty, inputTestcase, outputTestcase } = useSelector((state) => state.problem)
 
   const handleId = (e) => {
     dispatch(setId(e.target.value));
@@ -72,14 +71,27 @@ export default function Createproblem() {
     dispatch(setTags(e.target.value));
     setErrors({})
   }
+  const handleInput_testcase = (e) => {
+    dispatch(setInputtestcase(e.target.value));
+    setErrors({})
+  }
+  const handleOutput_testcase = (e) => {
+    dispatch(setOutputtestcase(e.target.value));
+    setErrors({})
+  }
+
+
 
   const handlesave = async () => {
-    try {
 
+
+    try {
       const username = localStorage.getItem("username")
       const backend_url = import.meta.env.VITE_BACKEND_URL
+      // const formattedInput = inputTestcase.replace(/\\n/g, "\n");
+
       const response = await axios.post(backend_url + "/problems/createproblem", {
-        id, title, statement, difficulty, timelimit, input, output, constraints, tags, username
+        id, title, statement, difficulty, timelimit, input, output, constraints, tags, username, inputTestcase, outputTestcase
       })
 
       console.log(response.data);
@@ -154,20 +166,38 @@ export default function Createproblem() {
           <input type="text" placeholder='Ex: Array,DP' value={tags} onChange={handleTags} />
           {errors.tags && <p>{errors.tags}</p>}
         </div>
-        <div className="testcases">
-          <div className="fields">
-            <label htmlFor="">Input Testcase</label>
-            <button onClick={() => fileInputRef.current.click()}>Choose File</button>
-            <input type="file" placeholder='Ex: Array,DP' ref = {fileInputRef} onChange={handleFileChange} style={{display:"none"}} />
-            {errors.tags && <p>{errors.tags}</p>}
-          </div>
-          <div className="fields">
-            <label htmlFor="">Output Testcase</label>
-            <button onClick={() => fileInputRef.current.click()}>Choose File</button>
-            <input type="file" placeholder='Ex: Array,DP' ref = {fileInputRef} onChange={handleFileChange} style={{display:"none"}} />
-            {errors.tags && <p>{errors.tags}</p>}
-          </div>
+        <div className="fields">
+          <label htmlFor="">Input Testcases</label>
+          <textarea value={inputTestcase} onChange={handleInput_testcase} />
+          {/* <input type="text" placeholder='' value={inputTestcase} onChange={handleInput_testcase} /> */}
+          {errors.inputTestcase && <p>{errors.inputTestcase}</p>}
         </div>
+        <div className="fields">
+          <label htmlFor="">output Testcases</label>
+          <textarea value={outputTestcase} onChange={handleOutput_testcase} />
+          {/* <input type="text" placeholder='' value={outputTestcase} onChange={handleOutput_testcase} /> */}
+          {errors.outputTestcase && <p>{errors.outputTestcase}</p>}
+        </div>
+        {/* <div className="testcases">
+        <div className="fields">
+          <label htmlFor="">Input Testcase</label>
+           <div className="field-files">
+            {input_file ? <span>{input_file.name}</span> : <span>{"No file selected"}</span>}
+             <button onClick={() => fileInputRef.current.click()}>Choose File</button>
+          <input type="file" placeholder='Ex: Array,DP' ref={fileInputRef} onChange={handleInput_testcase} style={{ display: "none" }} />
+          </div>
+          {errors.input_file && <p>{errors.input_file}</p>}
+        </div>
+        <div className="fields">
+          <label htmlFor="">Output Testcase</label>
+          <div className="field-files">
+            {output_file ? <span>{output_file.name}</span> : <span>{"No file selected"}</span>}
+            <button onClick={() => fileOutputRef.current.click()}>Choose File</button>
+            <input type="file" placeholder='Ex: Array,DP' ref={fileOutputRef} onChange={handleOutput_testcase} style={{ display: "none" }} />                           
+          </div>
+          {errors.output_file && <p>{errors.output_file}</p>}
+        </div>
+      </div> */}
       </div>
     </div>
   )

@@ -1,0 +1,80 @@
+.verdict {
+    flex: 1;                        /* fill parent vertical space */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;      /* light gray border */
+    border-radius: 8px;
+    background-color: #f8fafc;       /* same as panelArea */
+    font-family: "Fira Code", monospace; 
+    font-size: 14px;
+    color: #1e293b;
+    /* overflow-y: auto;                */
+}
+
+/* Top summary section */
+.verdict-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: #f1f5f9;       /* light gray */
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Failed testcase section */
+.failedtestcase {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;      /* match panelArea border */
+    border-radius: 6px;
+    background-color: #ffffff;       /* match panelArea background */
+}
+
+/* Label styling */
+.failedtestcase label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;                  /* secondary text, similar to panel labels */
+}
+
+/* Input styling */
+.failedtestcase input {
+    width: 100%;
+    padding: 6px 8px;
+    font-family: "Fira Code", monospace;
+    font-size: 14px;
+    border: 1px solid #cbd5e1;       /* match panelArea border */
+    border-radius: 4px;
+    background-color: #f8fafc;        /* match panelArea background */
+    color: #1e293b;
+}
+
+.failedtestcase input:focus {
+    outline: none;
+    border-color: #0284c7;           /* blue focus */
+    box-shadow: 0 0 0 2px rgba(2,132,199,0.2);
+}
+
+.verdict_testcase{
+    width: 15%;
+    text-align: center;
+    padding: 4px;
+    border-radius: 4px;
+    display: inline-block;
+    color: black;
+    background-color: var(--success);
+    border: 1px solid green;
+    margin-right: 10px;
+}
+
+.verdict .passed-testcases{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}

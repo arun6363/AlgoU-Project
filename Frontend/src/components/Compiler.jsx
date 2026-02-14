@@ -88,12 +88,12 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
             const response = await axios.post(backend_url + "/compiler/run", {
                 language, code, input: inputcode
             })
-            // console.log(response);
+            console.log(response);
             // dispatch(setOutputCode(response.data.output))
             dispatch(setOutputCode(response.data))
         } catch (err) {
-            // console.log(err.response);
-            dispatch(setOutputCode(err.response.data.std.error))
+            console.log(err);
+            dispatch(setOutputCode(err.response.data))
             // dispatch(setOutputCode(err.response.data.std.stderr))
         }
     }
@@ -157,8 +157,8 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
                                     <option value="py">Python</option>
                                 </select>
                                 <button className='btn' onClick={handleRun}> Run</button>
-                                <button className='btn' onClick={handlesubmit}> Submit</button>
-                                <button className='btn' onClick={handleAiReview}> AI Review</button>
+                                {/* <button className='btn' onClick={handlesubmit}> Submit</button> */}
+                                {/* <button className='btn' onClick={handleAiReview}> AI Review</button> */}
                                 {showAlert && <AuthAlert />}
                             </div>
                         </div>

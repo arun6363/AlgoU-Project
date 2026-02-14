@@ -15,7 +15,7 @@ const app = express();
 
 // Middlewares
 connection();
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
@@ -29,6 +29,8 @@ app.use("/compiler",compileroutes)
 app.use("/problems",problemroutes)
 app.use("/user",userroutes)
 app.use("/",aireviewroutes)
+
+
 // server 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT ,()=>{

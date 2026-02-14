@@ -87,18 +87,41 @@
     gap: 8px;
     width: 100%;
     padding: 10px 0px;
-    border-bottom: 1px solid var(--border);
 }
 
 .createproblem .body .testcases button{
-    width: 100%;
-    height: 35px;
+    width: 50%;
+    height: 100%;
     text-align: center;
     border: 1px solid var(--border);
     outline: none;
     font-size: 16px;
     font-weight: 400px;
     border-radius: 8px;
-    border-bottom: 1px solid var(--border);
     cursor: pointer;
 }
+
+.createproblem .body .testcases span{
+    padding-left: 10px;
+    width: 50%;
+}
+
+.createproblem .body .testcases .field-files{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+    height: 35px;
+    border: 1px solid var(--border);
+    outline: none;
+    font-size: 16px;
+    font-weight: 400px;
+    border-radius: 8px;
+    cursor: pointer; 
+}
+
+.createproblem .body .testcases .fields{
+    border-bottom: none;
+}
+

@@ -1,8 +1,8 @@
 import express, { urlencoded } from "express"
 import cors from "cors"
 
-// import { executeCode} from "./onlinecompiler.js"
 import { executeCode } from "./onlineCompiler/executeCode.js"
+import { run_testcases } from "./Submissions/service.js"
 
 const app = express()
 
@@ -26,6 +26,8 @@ app.post("/run", async (req,res)=>{
         return res.status(200).json({error:err,"std":err});
     }
 })
+
+app.post("/run-testcases",run_testcases)
 
 app.listen(4000,()=>{
     console.log('Server is running on 4000');

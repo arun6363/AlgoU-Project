@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setId, setTags, setTitle, setTimelimit, setInput, setOutput, setConstraints, setStatement, setDifficulty, resetproblem } from '../store/problemSlice'
+import { setId, setTags, setTitle, setTimelimit, setInput, setOutput, setConstraints, setStatement, setDifficulty, resetproblem,setInputtestcase,setOutputtestcase } from '../store/problemSlice'
 
 export default function Editproblem(props) {
 
@@ -21,7 +21,6 @@ export default function Editproblem(props) {
         async function fetchdata() {
             const backend_url = import.meta.env.VITE_BACKEND_URL
             const response = await axios.post(backend_url + `/problems/getproblembyid/${pid}`);
-            // console.log(response.data);
             const data = response.data;
             setProblem(response.data)
 
@@ -34,11 +33,13 @@ export default function Editproblem(props) {
             dispatch(setOutput(data.output));
             dispatch(setConstraints(data.constraints));
             dispatch(setDifficulty(data.difficulty));
+            dispatch(setInputtestcase(data.input_testcase));
+            dispatch(setOutputtestcase(data.output_testcase));
         }
         if (pid) fetchdata();
     }, [pid, dispatch])
 
-    const { id, title, statement, timelimit, input, output, constraints, tags, difficulty } = useSelector((state) => state.problem)
+    const { id, title, statement, timelimit, input, output, constraints, tags, difficulty,inputTestcase,outputTestcase } = useSelector((state) => state.problem)
 
     const handleId = (e) => {
         dispatch(setId(e.target.value));
@@ -76,6 +77,16 @@ export default function Editproblem(props) {
         dispatch(setTags(e.target.value));
         setErrors({})
     }
+
+    const handleInput_testcase = (e) => {
+        dispatch(setInputtestcase(e.target.value));
+        setErrors({})
+      }
+      const handleOutput_testcase = (e) => {
+        dispatch(setOutputtestcase(e.target.value));
+        setErrors({})
+      }
+
     const mapErrors = (errors) => {
         const formaterr = {}
         errors.forEach((err) => {
@@ -89,12 +100,12 @@ export default function Editproblem(props) {
             const username = localStorage.getItem("username")
             const backend_url = import.meta.env.VITE_BACKEND_URL
             const response = await axios.patch(backend_url + "/problems/editproblem", {
-                id, title, statement, difficulty, timelimit, input, output, constraints, tags, username
+                id, title, statement, difficulty, timelimit, input, output, constraints, tags, username,inputTestcase,outputTestcase
             })
 
             console.log(response.data);
             dispatch(resetproblem())
-            console.log(id,title);
+            console.log(id, title);
             navigate("/userprofile")
         } catch (err) {
             if (err?.response?.data?.errors) {
@@ -165,6 +176,19 @@ export default function Editproblem(props) {
                     <label htmlFor="">Tags</label>
                     <input type="text" placeholder='Ex: Array,DP' value={tags} onChange={handleTags} />
                     {errors.tags && <p>{errors.tags}</p>}
+                </div>
+
+                <div className="fields">
+                    <label htmlFor="">Input Testcases</label>
+                    <textarea value={inputTestcase} onChange={handleInput_testcase} />
+                    {/* <input type="text" placeholder='' value={inputTestcase} onChange={handleInput_testcase} /> */}
+                    {errors.inputTestcase && <p>{errors.inputTestcase}</p>}
+                </div>
+                <div className="fields">
+                    <label htmlFor="">output Testcases</label>
+                    <textarea value={outputTestcase} onChange={handleOutput_testcase} />
+                    {/* <input type="text" placeholder='' value={outputTestcase} onChange={handleOutput_testcase} /> */}
+                    {errors.outputTestcase && <p>{errors.outputTestcase}</p>}
                 </div>
             </div>
         </div>

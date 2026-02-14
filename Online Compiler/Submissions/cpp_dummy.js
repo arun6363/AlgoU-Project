@@ -47,6 +47,11 @@ const executeCPP_Dummy = async (code, input = "") => {
       return stdout;
     } catch (error) {
       console.log(error)
+      if (error.code === 139) {
+        console.log("seg Error");
+        throw { type: "SEG", error: "Segmentation Fault (SIGSEGV)" };
+        // error: 'Segmentation Fault (SIGSEGV)'
+      }
       if (error.killed) {
         throw { type: "TLE", error: "Time Limit Exceeded" };
       } else if (error.code === 137) {
@@ -59,12 +64,12 @@ const executeCPP_Dummy = async (code, input = "") => {
         throw { type: "LTE", error: "Memory Limit Exceeded" };
       }
     }
-  } catch(err){
+  } catch (err) {
     return err;
-  }finally {
+  } finally {
     // 🧹 Cleanup
     await fs.rm(jobDir, { recursive: true, force: true });
   }
 };
 
-export { executeCPP_Dummy};
+export { executeCPP_Dummy };

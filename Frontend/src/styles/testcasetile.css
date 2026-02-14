@@ -1,0 +1,73 @@
+/* .testcase{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding: 8px 4px;
+    border-radius: 4px ;
+    width: 25%;
+    border: 1px solid var(--border);
+}
+
+.testcase .fields{
+    height: 25px;
+    margin-bottom: 2px;
+}  */
+
+
+.testcase {
+  background-color: #ffffff;          /* light card background */
+  border: 1px solid #cbd5e1;         /* light gray border */
+  border-radius: 8px;                 /* rounded corners */
+  padding: 12px 16px;                 /* spacing inside card */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* subtle shadow */
+  width: 250px;                       /* fixed width for side-by-side layout */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.testcase .fields {
+  display: block;
+  font-weight: 600;
+  color: #1e293b;    /* dark text */
+}
+
+.testcase span {
+  font-size: 0.9rem;
+  color: #0284c7;    /* blue for case number */
+}
+
+.testcase label {
+  font-size: 0.85rem;
+  color: #475569;    /* secondary text */
+  margin-bottom: 4px;
+}
+
+.testcase input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #94a3b8; /* gray border */
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: "Fira Code", monospace;
+  color: #1e293b; /* text color */
+  background-color: #f8fafc;
+}
+
+.testcase div{
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #94a3b8; /* gray border */
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: "Fira Code", monospace;
+  color: #1e293b; /* text color */
+  background-color: #f8fafc;
+}
+
+.testcase input:focus {
+  outline: none;
+  border-color: #0284c7; /* blue focus */
+  box-shadow: 0 0 0 2px rgba(2,132,199,0.2);
+}

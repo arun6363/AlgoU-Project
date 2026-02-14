@@ -1,9 +1,5 @@
 
-import { executeCPP } from "./cpp.js";
-import { executeJAVA } from "./java.js";
-import { executePYTHON } from "./python.js";
-import { executeCPP_Dummy } from "./dummy.js";
-// import { executeCPP_Spawn } from "./spawn.js";
+import { executeCPP_Dummy } from "./cpp_dummy.js";
 import { executeJAVA_Dummy } from "./java_dummy.js";
 import { executePYTHON_Dummy } from "./python_dummy.js";
 

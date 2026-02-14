@@ -35,13 +35,21 @@ const problemSchema = new mongoose.Schema({
         required:true,
     },
     constraints:{
-        type:[String],
+        type:String,
         required:true,
     },
     tags:{
-        type:[String],
+        type:String,
         required:true,
-    }
+    },
+    input_testcase:{
+        type:String,
+        required:true,
+    },
+    output_testcase:{
+        type:String,
+        required:true,
+    },
 })
 
 const problem = mongoose.model("Problem",problemSchema);

@@ -10,6 +10,8 @@ const initialState = {
     output:"",
     constraints:"",
     tags:"",
+    inputTestcase:"",
+    outputTestcase:"",
 }
 
 const problemSlice = new createSlice({
@@ -43,9 +45,18 @@ const problemSlice = new createSlice({
         setTags:(state,action)=>{
             state.tags = action.payload;
         },
+        setInputtestcase:(state,action)=>{
+            state.inputTestcase = action.payload;
+        },
+        setOutputtestcase:(state,action)=>{
+            state.outputTestcase = action.payload;
+        },
+
+
         resetproblem:()=>initialState,
     }
 })
 
-export const {setConstraints,setId,setInput,setOutput,setTags,setTitle,setStatement,resetproblem,setDifficulty,setTimelimit} = problemSlice.actions
+export const {setConstraints,setId,setInput,setOutput,setTags,setTitle,setStatement,resetproblem,setDifficulty,setTimelimit,setInputtestcase,setOutputtestcase} = problemSlice.actions
+
 export default problemSlice.reducer;

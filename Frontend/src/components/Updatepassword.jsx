@@ -62,7 +62,7 @@ export default function Updatepassword() {
 
                 <div className="form-group">
                     <label>Username</label>
-                    <input type="text" placeholder="Choose a username" value={username} onChange={(e) => { dispatch(setUsername(e.target.value)), setErrors({}) }} />
+                    <input type="text" placeholder="Enter username" value={username} onChange={(e) => { dispatch(setUsername(e.target.value)), setErrors({}) }} />
                     {errors.username && <p className='error'> {errors.username}</p>}
                 </div>
 

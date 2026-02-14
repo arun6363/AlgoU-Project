@@ -23,6 +23,20 @@ export default function UserProfile_2() {
     const tabFromUrl = searchParams.get("tab");
     // setModal(tabFromUrl);
 
+    useEffect(()=>{
+        async function fetchdata(){
+            const username = localStorage.getItem("username")
+            const response = await axios.post("http://localhost:3000/problems/fetchdata",{
+                username
+            })
+        console.log(response)
+        localStorage.setItem('total_problems',response.data.total_problems);
+        localStorage.setItem("created_problems",response.data.created_problems)
+        localStorage.setItem("solved_problems",response.data.solved_problems)
+        }
+        fetchdata();
+    })
+
     useEffect(() => {
         setModal(tabFromUrl);
         if(tabFromUrl === "solvedProblems"){
@@ -75,6 +89,16 @@ export default function UserProfile_2() {
     }
 
     const handlelogout = () => {
+        localStorage.clear()
+        dispatch(logout())
+        navigate('/')
+    }
+    const handledelete = async () => {
+        const username = localStorage.getItem("username")
+        console.log(username)
+        const response = await axios.post("http://localhost:3000/problems/deleteaccount",{
+            username
+        })
         localStorage.clear()
         dispatch(logout())
         navigate('/')
@@ -138,20 +162,20 @@ export default function UserProfile_2() {
                         </div>
                         <div className="fields">
                             <div className="field_heading">Total Problems</div>
-                            <div className="field_value"></div>
+                            <div className="field_value">{localStorage.getItem("total_problems")}</div>
                         </div>
                         <div className="fields">
                             <div className="field_heading">Solved Problems</div>
-                            <div className="field_value"></div>
+                            <div className="field_value">{localStorage.getItem("solved_problems")}</div>
                         </div>
                         <div className="fields">
                             <div className="field_heading">Created Problems</div>
-                            <div className="field_value"></div>
+                            <div className="field_value">{localStorage.getItem("created_problems")}</div>
                         </div>
                         <div className="buttons">
-                            <button className="btn" >Update Password</button>
+                            <button className="btn" onClick={()=>{navigate("/updatepassword")}}>Update Password</button>
                             <button className="btn" onClick={handlelogout} >Logout</button>
-                            <button className="btn" >Delete Account</button>
+                            <button className="btn" onClick={handledelete}>Delete Account</button>
                             {/* <div className="btn">Update password</div>
                             <div className="btn" onClick={handlelogout}>Logout</div>
                             <div className="btn">Delete Account</div> */}
