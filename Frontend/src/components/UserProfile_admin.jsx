@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import "../styles/UserProfile_2.css"
-import Loginnav from './Loginnav'
+import Loginnav from './Loginnav.jsx'
 import SolvedproblemTile from './SolvedproblemTile.jsx'
 import CreatedproblemTile from './CreatedproblemTile.jsx'
 
@@ -16,6 +16,7 @@ export default function UserProfile_2() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const backend_url = import.meta.env.VITE_BACKEND_URL
     const [createdproblems, setCreatedproblems] = useState([])
     const [solvedproblems, setSolvedproblems] = useState([])
     const [model, setModal] = useState(null);
@@ -23,43 +24,38 @@ export default function UserProfile_2() {
     const tabFromUrl = searchParams.get("tab");
     // setModal(tabFromUrl);
 
-    useEffect(()=>{
-        async function fetchdata(){
+    useEffect(() => {
+        async function fetchdata() {
             const username = localStorage.getItem("username")
-            const response = await axios.post("http://localhost:3000/problems/fetchdata",{
+            const response = await axios.post(backend_url + "/problems/fetchdata", {
                 username
             })
-        console.log(response)
-        localStorage.setItem('total_problems',response.data.total_problems);
-        localStorage.setItem("created_problems",response.data.created_problems)
-        localStorage.setItem("solved_problems",response.data.solved_problems)
+            setSearchParams({ tab: "createdProblems" });
+            console.log(response)
+            localStorage.setItem('total_problems', response.data.total_problems);
         }
-        fetchdata();
-    })
+        if (!localStorage.getItem("total_problems")) fetchdata();
+        fetchCreatedProblems();
+    }, [])
 
-    useEffect(() => {
-        setModal(tabFromUrl);
-        if(tabFromUrl === "solvedProblems"){
-            fetchSolvedProblems();
-        }else if(tabFromUrl === "createdProblems"){
-            fetchCreatedProblems();
-        }
-        else{
-            fetchSubmissions();
-        }
-    }, [tabFromUrl]);
+    // useEffect(() => {
+    //     if(tabFromUrl === "createdProblems"){
+    //         if(!createdproblems) fetchCreatedProblems();
+    //         // fetchCreatedProblems();
+    //     }
+    // }, [tabFromUrl]);
 
-    
+
     async function fetchCreatedProblems() {
         const username = localStorage.getItem("username")
-        console.log(username)
+        // console.log(username)
         setSearchParams({ tab: "createdProblems" });
         setModal("createdProblems")
-        console.log(username, "Created Problems")
-        const response = await axios.get(`http://localhost:3000/problems/getcreatedproblems?username=${username}`, {
+        // console.log(username, "Created Problems")
+        const response = await axios.get(backend_url + `/problems/getcreatedproblems?username=${username}`, {
             username: username
         });
-        console.log(response.data)
+        // console.log(response.data)
         setCreatedproblems(response.data)
         // console.log(createdproblems) 
     }
@@ -69,7 +65,7 @@ export default function UserProfile_2() {
         setSearchParams({ tab: "solvedProblems" });
         setModal("solvedProblems")
         console.log(username, "Solved Problems")
-        const response = await axios.get(`http://localhost:3000/problems/getcreatedproblems?username=${username}`, {
+        const response = await axios.get(backend_url + `/problems/getcreatedproblems?username=${username}`, {
             username: username
         });
         console.log(response.data)
@@ -96,7 +92,7 @@ export default function UserProfile_2() {
     const handledelete = async () => {
         const username = localStorage.getItem("username")
         console.log(username)
-        const response = await axios.post("http://localhost:3000/problems/deleteaccount",{
+        const response = await axios.post(backend_url + "/problems/deleteaccount", {
             username
         })
         localStorage.clear()
@@ -110,8 +106,8 @@ export default function UserProfile_2() {
             <div className='main'>
                 <div className="left">
                     <div className="header">
-                        <button onClick={() => fetchSubmissions()}>Submissions</button>
-                        <button onClick={() => fetchSolvedProblems()}>Solved Problems</button>
+                        {/* <button onClick={() => fetchSubmissions()}>Submissions</button> */}
+                        {/* <button onClick={() => fetchSolvedProblems()}>Solved Problems</button> */}
                         <button onClick={() => fetchCreatedProblems()}>Created Problems</button>
                         <button onClick={() => navigate("/createproblem")}>Create problem</button>
                     </div>
@@ -133,7 +129,7 @@ export default function UserProfile_2() {
                                 ) : (<div> No Created Poblems</div>)
                             ) : (null)
                         }
-                        {model === "solvedProblems" ?
+                        {/* {model === "solvedProblems" ?
                             (
                                 solvedproblems.length > 0 ? (
                                     solvedproblems.map((problem, index) => (
@@ -142,7 +138,7 @@ export default function UserProfile_2() {
                                 ) : (<div> No Solved Poblems</div>)
                             )
                             : (null)
-                        }
+                        } */}
                         {/* <SolvedproblemTile title={"Dummy"} difficulty={"Easy"} />
                         <SolvedproblemTile title={"Dummy"} difficulty={"Easy"} />
                         <SolvedproblemTile title={"Dumm-2"} difficulty={"Hard"} />
@@ -164,16 +160,16 @@ export default function UserProfile_2() {
                             <div className="field_heading">Total Problems</div>
                             <div className="field_value">{localStorage.getItem("total_problems")}</div>
                         </div>
-                        <div className="fields">
+                        {/* <div className="fields">
                             <div className="field_heading">Solved Problems</div>
                             <div className="field_value">{localStorage.getItem("solved_problems")}</div>
-                        </div>
-                        <div className="fields">
+                        </div> */}
+                        {/* <div className="fields">
                             <div className="field_heading">Created Problems</div>
                             <div className="field_value">{localStorage.getItem("created_problems")}</div>
-                        </div>
+                        </div> */}
                         <div className="buttons">
-                            <button className="btn" onClick={()=>{navigate("/updatepassword")}}>Update Password</button>
+                            <button className="btn" onClick={() => { navigate("/updatepassword") }}>Update Password</button>
                             <button className="btn" onClick={handlelogout} >Logout</button>
                             <button className="btn" onClick={handledelete}>Delete Account</button>
                             {/* <div className="btn">Update password</div>

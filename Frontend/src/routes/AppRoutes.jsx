@@ -21,12 +21,13 @@ import Editproblempage from '../pages/Editproblempage'
 export default function AppRoutes() {
 
   const {isLogedin} = useSelector((state)=>state.user);
+  const username = localStorage.getItem("username")
   return (
     <BrowserRouter>
         <Routes>
 
             {/* {console.log(isLogedin)} */}
-            <Route path="/" element={isLogedin ? <Homepage/> : <Landingpage/>} />
+            <Route path="/" element={username ? <Homepage/> : <Landingpage/>} />
             <Route path="/login" element ={<Login/>} />
             <Route path="/register" element ={<Register/>} />
             <Route path="/updatepassword" element ={<Updatepassword/>} />

@@ -73,8 +73,8 @@ function cleanPythonErrors(stderr) {
 const codeRun = async (req, res) => {
   const {language } = req.body;
   const response = await axios.post(
-      "http://localhost:4000/run",
-      // "http://oj-compiler:4000/run",
+      // "http://localhost:4000/run",
+      "http://oj-compiler:4000/run",
       req.body
     );
 
@@ -121,8 +121,8 @@ const codeRun = async (req, res) => {
 const run_testcases = async (req, res) => {
   const {language } = req.body;
   const response = await axios.post(
-      "http://localhost:4000/run-testcases",
-      // "http://oj-compiler:4000/run",
+      // "http://localhost:4000/run-testcases",
+      "http://oj-compiler:4000/run-testcases",
       req.body
     );
 
@@ -167,4 +167,56 @@ const run_testcases = async (req, res) => {
     return res.status(200).json(response.data);
 }
 
-export { codeRun, run_testcases}
+
+
+const run_submissions = async (req, res) => {
+  const {language } = req.body;
+  const response = await axios.post(
+      // "http://localhost:4000/run-submissions",
+      "http://oj-compiler:4000/run-submissions",
+      req.body
+    );
+
+    console.log("response:",response.data);
+    // const {type,error} = response.data;
+
+    if(language === "py"){
+      const output = response.data.output;
+      if(!output) return res.status(200).json(response.data);
+      if(!output.type) return res.status(200).json(response.data);
+
+       if(output.type === "RTE" && (output.error!== "Time Limit Exceeded" || output.error!=="Memory Limit Exceeded") && output.error!=='stdout maxBuffer length exceeded'){
+        const cleanerrors = cleanPythonErrors(output.error)
+        return res.status(400).json(cleanerrors)
+      }
+      return res.status(400).json(output.error)
+    }
+
+    if(language === "java"){
+    const output = response.data.output;
+      if(!output) return res.status(200).json(response.data);
+      if(!output.type) return res.status(200).json(response.data);
+     if(output.type === "CE"){
+        const cleanerrors = cleanJavaErrors(output.error)
+        return res.status(400).json(cleanerrors)
+      }
+      return res.status(400).json(output.error);
+    }
+
+    if(language === "cpp"){
+      const output = response.data.output;
+      if(!output) return res.status(200).json(response.data);
+      if(!output.type) return res.status(200).json(response.data);
+      if(output.type === "CE"){
+        const cleanerrors = cleanCppErrors(output.error)
+        return res.status(400).json(cleanerrors)
+      }
+      return res.status(400).json(output.error);
+    }
+
+
+    return res.status(200).json(response.data);
+}
+
+
+export { codeRun, run_testcases,run_submissions}

@@ -22,6 +22,8 @@ const userSlice = createSlice({
             state.isLogedin = action.payload;
         },
         logout:(state)=>{
+            state.email="",
+            state.username='',
             state.isLogedin = false;
             localStorage.clear();
         }

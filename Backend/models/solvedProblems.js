@@ -1,19 +1,19 @@
 import mongoose from "mongoose"
 
-const SolvedProblem = new mongoose.Schema({
+const solvedProblem = new mongoose.Schema({
     username:{
         type:String,
         required:true,
     },
-    pid:{
-        type:String,
+    id:{
+        type:Number,
         required:true,
     },
-    ptitle:{
+    title:{
         type:String,
         required:true,
     }
 })
 
-const solvedProblem = mongoose.model("SolvedProblem",SolvedProblem)
-export default solvedProblem;
+const SolvedProblem = mongoose.model("SolvedProblem",solvedProblem)
+export default SolvedProblem;

@@ -18,6 +18,7 @@ import { use } from 'react';
 
 export default function Problempage() {
 
+  const backend_url = import.meta.env.VITE_BACKEND_URL
   const { id, title } = useParams();
   const { isLogedin } = useSelector((state) => state.user)
 
@@ -26,9 +27,9 @@ export default function Problempage() {
   const [isError, setIsError] = useState(false);
   const [constraints, setConstraints] = useState([])
   const [tags, setTags] = useState([])
-  const [testcases,setTestcases] = useState([]);
-  const [inputs,setInputs] = useState([])
-  const [result,setresult] = useState()
+  const [testcases, setTestcases] = useState([]);
+  const [inputs, setInputs] = useState([])
+  const [result, setresult] = useState()
 
   const cases = [{ input: "1 2 3", output: "5" }]
   // const result = { verdict: "Accepted", total_testcases: 5, passed: 3, failedtestcase: 3, input: "1 2 3", output: "4", expectedoutput: "10" }
@@ -41,7 +42,7 @@ export default function Problempage() {
     async function fetchdata() {
       const backend_url = import.meta.env.VITE_BACKEND_URL
       const response = await axios.post(backend_url + `/problems/getproblembyid/${id}`);
-      const testcase = await axios.post(backend_url + `/problems/fetchtestcase`,{
+      const testcase = await axios.post(backend_url + `/problems/fetchtestcase`, {
         id
       })
       setTestcases(testcase.data)
@@ -116,24 +117,34 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
   }
 
   const handleRun = async () => {
+
+    const testcase_run = await axios.post(backend_url + `/problems/fetchtestcase`, {
+      id
+    })
     try {
-      const backend_url = import.meta.env.VITE_BACKEND_URL
       const response = await axios.post(backend_url + "/compiler/run_testcases", {
-        language, code, testcases
+        language, code, testcases: testcase_run.data
       })
 
       console.log(response.data);
       dispatch(setOutputCode(response.data))
-      setTab("output"); 
+      setTab("output");
       setIsError(false);
       setTab("verdict")
       setresult(response.data)
     } catch (err) {
       console.log(err)
       dispatch(setOutputCode(err.response.data))
-      setTab("output"); 
+      setTab("output");
       setIsError(true);
     }
+  }
+
+  const updateSolved = async () => {
+    const username = localStorage.getItem("username");
+    const response = await axios.post(backend_url + "/problems/update_solved", {
+      username, id, title: problem.title
+    })
   }
 
   const handleAiReview = () => {
@@ -145,8 +156,34 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
       setShowAlert(true); // show the alert at top of page
     }
   }
-  const handlesubmit = () => {
+  const handlesubmit = async () => {
     if (isLogedin) {
+
+      const testcase_submit = await axios.post(backend_url + `/problems/fetchtestcase_submit`, {
+        id
+      })
+      console.log(testcase_submit.data);
+      setTestcases(testcase_submit.data)
+
+      try {
+        const response = await axios.post(backend_url + "/compiler/run_submissions", {
+          language, code, testcases: testcase_submit.data
+        })
+
+        console.log(response.data);
+        dispatch(setOutputCode(response.data))
+        setTab("output");
+        setIsError(false);
+        setTab("verdict")
+        setresult(response.data)
+        updateSolved();
+        // setTestcases(testcases);
+      } catch (err) {
+        console.log(err)
+        dispatch(setOutputCode(err.response.data))
+        setTab("output");
+        setIsError(true);
+      }
       // navigate("/ai-review", { state: { code } });
     } else {
       // setShowAlert(false);
@@ -197,9 +234,9 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
             </div>
             <div className="fields">
               <label htmlFor="" className='heading'>Input</label>
-               {inputs.map((input, index) => (
-                  <div key={index} className='constraints'>{input}</div>
-                ))}
+              {inputs.map((input, index) => (
+                <div key={index} className='constraints'>{input}</div>
+              ))}
             </div>
             <div className="fields">
               <label htmlFor="" className='heading'>Output</label>
@@ -207,17 +244,17 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
             </div>
             <div className="fields">
               <label htmlFor="" className='heading'>Constraints</label>
-            
-                {constraints.map((constraint, index) => (
-                  <div key={index} className='constraints'>{constraint}</div>
-                ))}
-              
+
+              {constraints.map((constraint, index) => (
+                <div key={index} className='constraints'>{constraint}</div>
+              ))}
+
             </div>
             <div className="fields">
               <label htmlFor="" className='heading'>Tags</label>
-                {tags.map((tag, index) => (
-                  <div key={index} className='tags'>{tag}</div>
-                ))}
+              {tags.map((tag, index) => (
+                <div key={index} className='tags'>{tag}</div>
+              ))}
             </div>
 
 
@@ -277,7 +314,7 @@ print("Welcome to Online Judges - online compiler -- Python!!!")`
 
               {/* {outputcode && setTab("output")} */}
               {/* {console.log(testcases)} */}
-              {tab === "testcase" && (testcases ? <Testcase cases={testcases} /> :"No test cases" )}
+              {tab === "testcase" && (testcases ? <Testcase cases={testcases} /> : "No test cases")}
               {tab === "verdict" && (<Verdict result={result} />)}
               {tab === "output" && (
                 <textarea

@@ -3,6 +3,7 @@ import Problem from "../models/Problem.js"
 import CreatedBy from "../models/CreatedBy.js";
 import Testcase from "../models/Testcase.js"
 import User from "../models/User.js"
+import solvedProblem from "../models/solvedProblems.js";
 
 export const problemValidationRules = () =>
     [
@@ -148,7 +149,37 @@ const getcreatedproblems = async (req, res) => {
             }
         }
     ]);
-    console.log("created", response)
+    // console.log("created", response)
+    res.status(200).json(response);
+}
+
+const getsolvedproblems = async (req, res) => {
+    const { username } = req.query;
+    const response = await solvedProblem.aggregate([
+        {
+            $match: { username }
+        },
+        {
+            $lookup: {
+                from: "problems",
+                localField: "id",
+                foreignField: "id",
+                as: "problem"
+            }
+        },
+        {
+            $unwind: "$problem"
+        },
+        {
+            $project: {
+                _id: 0,
+                id: "$problem.id",
+                title: "$problem.title",
+                difficulty: "$problem.difficulty",
+            }
+        }
+    ]);
+    // console.log("created", response)
     res.status(200).json(response);
 }
 
@@ -159,14 +190,36 @@ const fetchTestcase = async (req, res) => {
 
     return res.status(200).json(result);
 }
+const fetchtestcase_submit = async (req, res) => {
+    const { id } = req.body;
+    const result = await Testcase.find({ id }, { _id: 0, id: 1, input: 1, output: 1 });
+    // console.log(result);
+
+    return res.status(200).json(result);
+}
 
 const fetchdata = async (req, res) => {
     const { username } = req.body;
     const total_problems = await Problem.countDocuments();
-    const created_problems = await CreatedBy.countDocuments({ username: username })
-    // const solvedproblems = await 
 
-    res.status(200).json({ total_problems, created_problems, solved_problems: 0 });
+    res.status(200).json({ total_problems});
+}
+
+const fetchdata_user = async (req, res) => {
+    const { username } = req.body;
+    const total_problems = await Problem.countDocuments();
+    // cons solved_problems = await Solved.countDocuments({username});
+    res.status(200).json({ total_problems,solved_problems:0});
+}
+
+const updateSolved = async(req,res)=>{
+    const {username,id,title} = req.body;
+
+    const solved = await solvedProblem.findOne({id,username})
+
+    if(!solved)
+        await solvedProblem.create({username,id,title});
+
 }
 
 const deleteaccount = async (req, res) => {
@@ -186,4 +239,4 @@ const deleteaccount = async (req, res) => {
 
 
 
-export { createproblem, deleteproblem, fetchproblems, editproblem, getproblembyid, getcreatedproblems, fetchTestcase, fetchdata, deleteaccount }
+export { createproblem, deleteproblem, fetchproblems, editproblem, getproblembyid, getcreatedproblems,getsolvedproblems, fetchTestcase,fetchtestcase_submit, fetchdata,fetchdata_user, deleteaccount, updateSolved}
