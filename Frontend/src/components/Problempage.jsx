@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import AuthAlert from './AuthAlert';
 import Testcase from './Testcase';
@@ -31,7 +31,9 @@ export default function Problempage() {
   const [inputs, setInputs] = useState([])
   const [result, setresult] = useState()
 
-  const cases = [{ input: "1 2 3", output: "5" }]
+
+  const navigate = useNavigate();
+  // const cases = [{ input: "1 2 3", output: "5" }]
   // const result = { verdict: "Accepted", total_testcases: 5, passed: 3, failedtestcase: 3, input: "1 2 3", output: "4", expectedoutput: "10" }
 
   // useEffect(()=>{
@@ -40,7 +42,8 @@ export default function Problempage() {
 
   useEffect(() => {
     async function fetchdata() {
-      const backend_url = import.meta.env.VITE_BACKEND_URL
+      // const backend_url = import.meta.env.VITE_BACKEND_URL
+      console.log(backend_url);
       const response = await axios.post(backend_url + `/problems/getproblembyid/${id}`);
       const testcase = await axios.post(backend_url + `/problems/fetchtestcase`, {
         id

@@ -20,7 +20,7 @@ export default function Loginnav() {
 
   return (
     <div className='loginnav'>
-        <div className='heading' onClick={()=>{navigate("/")}}> Online Judge</div>
+        <div className='heading' onClick={()=>{navigate("/")}}> Code Judge</div>
          <div className="middle">
             <div className={`mid ${isActive("/online-compiler") ? "active" : ""}`}
             onClick={()=>{navigate("/compiler")}}>Compiler</div>

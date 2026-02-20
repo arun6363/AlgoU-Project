@@ -8,6 +8,8 @@ import axios from 'axios';
 
 
 export default function AIreviewpage() {
+
+  const backend_url = import.meta.env.VITE_BACKEND_URL
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,22 +18,21 @@ export default function AIreviewpage() {
 
     useEffect(()=>{
      async function fetchreview(){
-        const response = await axios.post("http://localhost:3000/ai-review",{
+        const response = await axios.post(backend_url + "/ai-review",{
           code:state.code,
         })
 
         console.log(response)
         setReview(response.data.review);
-        // fetchreview();
      }
-     fetchreview();
+     if(!review) fetchreview();
 
     },[])
 
    return (
     <div style={styles.overlay}>
       <div style={styles.card}>
-        <button style={styles.closeBtn} onClick={()=>navigate("/compiler")}>
+        <button style={styles.closeBtn} onClick={()=>navigate(-1)}>
           ✕
         </button>
 

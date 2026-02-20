@@ -16,7 +16,7 @@ export default function Nabvar(props) {
 
   return (
     <div className='navbar'>
-      <div className="heading" onClick={()=>navigate('/')} >Online Judge</div>
+      <div className="heading" onClick={()=>navigate('/')} >Code Judge</div>
 
       <div className="auth-buttons">
         <button onClick={handlelogin} >Login</button>

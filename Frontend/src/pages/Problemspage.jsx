@@ -10,6 +10,7 @@ import Nabvar from '../components/Navbar'
 
 export default function Problemspage() {
 
+    const backend_url = import.meta.env.VITE_BACKEND_URL
     const [problems, setProblems] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const problemsPerPage = 10;
@@ -18,7 +19,7 @@ export default function Problemspage() {
 
     useEffect(() => {
         async function fetchdata() {
-            const response = await axios.get("http://localhost:3000/problems/fetchproblems");
+            const response = await axios.get(backend_url + "/problems/fetchproblems");
             setProblems(response.data)
         }
         fetchdata();

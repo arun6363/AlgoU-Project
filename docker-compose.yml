@@ -1,0 +1,15 @@
+
+services:
+  backend:
+    build:
+      context: ./Backend
+    container_name: oj-backend
+    ports:
+      - "3000:3000"
+
+  compiler:
+    build:
+      context: ./OnlineCompiler
+    container_name: oj-compiler
+    ports:
+      - "4000:4000"
