@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/TestcaseTile.css"
+import "../styles/testcasetile.css"
 
 export default function TestcaseTile(props) {
     // console.log(props.id)

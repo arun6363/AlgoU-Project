@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/Createdproblemtile.css"
+import "../styles/createdproblemtile.css"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import slugify from "slugify"

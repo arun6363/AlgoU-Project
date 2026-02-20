@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate,useLocation} from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import "../styles/Loginnav.css"
+import "../styles/loginnav.css"
 import { setLogin ,logout} from '../store/userSlice';
 
 export default function Loginnav() {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import "../styles/UserProfile_2.css"
+import "../styles/userprofile_2.css"
 import Loginnav from './Loginnav.jsx'
 import SolvedproblemTile from './SolvedproblemTile.jsx'
 import CreatedproblemTile from './CreatedproblemTile.jsx'
