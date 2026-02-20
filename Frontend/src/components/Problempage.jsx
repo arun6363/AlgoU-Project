@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import AuthAlert from './AuthAlert';
 import Testcase from './Testcase';
-import Verdict from './verdict';
+import Verdict from './Verdict';
 
 
 import "../styles/problempage.css"
